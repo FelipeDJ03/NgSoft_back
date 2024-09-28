@@ -1,0 +1,13 @@
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-pngs-0 C:\PROYECTOS\flutter\Ngsoft\build\flutter_local_notifications\generated\res\pngs\release
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-resValues-1 C:\PROYECTOS\flutter\Ngsoft\build\flutter_local_notifications\generated\res\resValues\release
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-rs-2 C:\PROYECTOS\flutter\Ngsoft\build\flutter_local_notifications\generated\res\rs\release
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-mergeReleaseResources-3 C:\PROYECTOS\flutter\Ngsoft\build\flutter_local_notifications\intermediates\incremental\release\mergeReleaseResources\merged.dir
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-mergeReleaseResources-4 C:\PROYECTOS\flutter\Ngsoft\build\flutter_local_notifications\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-merged_res-5 C:\PROYECTOS\flutter\Ngsoft\build\flutter_local_notifications\intermediates\merged_res\release
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-core-1.6.0-6 C:\Users\CARLOS\.gradle\caches\transforms-3\1227bb32d338e358eff4c5bf5b08270c\transformed\core-1.6.0\res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-jetified-window-1.0.0-beta04-7 C:\Users\CARLOS\.gradle\caches\transforms-3\1f063c91a907141588f51f373b1f5f4a\transformed\jetified-window-1.0.0-beta04\res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-media-1.1.0-8 C:\Users\CARLOS\.gradle\caches\transforms-3\4eef60b2debf359c596fa269a0d677be\transformed\media-1.1.0\res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-jetified-window-java-1.0.0-beta04-9 C:\Users\CARLOS\.gradle\caches\transforms-3\6d2f8042b989e9f02a2914d91ea7c64c\transformed\jetified-window-java-1.0.0-beta04\res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-jetified-annotation-experimental-1.1.0-10 C:\Users\CARLOS\.gradle\caches\transforms-3\a15c6353ebee292a754ca976f2ce177d\transformed\jetified-annotation-experimental-1.1.0\res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-main-11 C:\Users\CARLOS\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-12.0.4\android\src\main\res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-release-12 C:\Users\CARLOS\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-12.0.4\android\src\release\res
