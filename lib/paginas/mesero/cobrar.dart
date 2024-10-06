@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 class CobrarPantalla extends StatefulWidget {
   final String mesaId;
   final String alias;
-
-  CobrarPantalla({required this.mesaId,required this.alias});
+  final String usuarioid;
+  CobrarPantalla({required this.mesaId,required this.alias,required this.usuarioid});
 
   @override
   _CobrarPantallaState createState() => _CobrarPantallaState();
@@ -84,7 +84,6 @@ class _CobrarPantallaState extends State<CobrarPantalla> {
   try {
     String folio = DateTime.now().millisecondsSinceEpoch.toString(); // Generar folio único
     DateTime now = DateTime.now(); // Obtener la fecha y hora actual
-    String idMesero = 'id_mesero_prueba'; // Reemplaza con el id del mesero autenticado
 
     await OrdenService2().registrarVenta(
       productos: _platillos,
@@ -95,9 +94,9 @@ class _CobrarPantallaState extends State<CobrarPantalla> {
       fecha: now, // Pasar DateTime en lugar de String
       hora: "${now.hour}:${now.minute}", // Si todavía necesitas el campo hora como String
       mesa: widget.mesaId,
-      idMesero: idMesero,
       metodoPago: metodoPago, // Pasar el método de pago
       alias:widget.alias,
+      idMesero:widget.usuarioid,
     );
     _showCobrarDialog2();
   } catch (e) {

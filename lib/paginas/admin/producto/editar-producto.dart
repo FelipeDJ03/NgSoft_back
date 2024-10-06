@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import '../../../widgets/imagen_usuario.dart';
 import 'producto-service.dart';
 
+enum Disponibilidad { disponible, nodisponible }
+
 class Editarproducto extends StatefulWidget {
   final String userId;
 
@@ -19,6 +21,8 @@ class _EditarproductoState extends State<Editarproducto> {
   TextEditingController nameController = TextEditingController();
   TextEditingController descripcionController = TextEditingController();
   TextEditingController precioController = TextEditingController();
+    Disponibilidad? _selectedDisponibilidad;
+
   File? _imagenSeleccionada;
   String? _imagenUrl;
 
@@ -36,6 +40,8 @@ class _EditarproductoState extends State<Editarproducto> {
         descripcionController.text = producto['descripcion'];
         precioController.text = producto['precio'].toString();
         _imagenUrl = producto['imagen_url'];
+        _selectedDisponibilidad = producto['delivery'] ; // Establece el valor seleccionado
+
       });
     }
   }
@@ -45,6 +51,7 @@ class _EditarproductoState extends State<Editarproducto> {
       Map<String, dynamic> actualizarInfo = {
         "nombre": nameController.text,
         "descripcion": descripcionController.text,
+        "delivery": _selectedDisponibilidad  == Disponibilidad.disponible ? 'Disponible' : 'nodisponible',
         "precio": double.parse(precioController.text),
       };
 
@@ -231,6 +238,53 @@ class _EditarproductoState extends State<Editarproducto> {
                   FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
                 ],
               ),
+               SizedBox(height: 25,),
+                     DropdownButtonFormField<Disponibilidad>(
+                      value: _selectedDisponibilidad,
+                      items: [
+                        DropdownMenuItem(
+                          value: Disponibilidad.disponible,
+                          child: Text('Disponible'),
+                        ),
+                        DropdownMenuItem(
+                          value: Disponibilidad.nodisponible,
+                          child: Text('No disponible'),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedDisponibilidad = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        filled: true, 
+                        fillColor: Color(0xFFffffff),
+                        labelText: 'Disponibilidad en delivery',
+                        labelStyle: TextStyle(
+                          color: Colors.black, 
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFD2691E),
+                            width: 1.3,
+                          ),
+                          borderRadius: BorderRadius.circular(18.0), 
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFD2691E),
+                            width: 1.3,
+                          ),
+                          borderRadius: BorderRadius.circular(18.0), 
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Por favor selecciona una disponibilidad';
+                        }
+                        return null;
+                      },
+                    ),
               SizedBox(height: 25.0),
               Center(
                 child: ElevatedButton(

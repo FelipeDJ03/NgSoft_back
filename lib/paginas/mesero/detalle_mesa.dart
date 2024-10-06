@@ -8,8 +8,8 @@ import 'orden-service.dart';
 class OrdenMesaPantalla extends StatefulWidget {
   final DocumentSnapshot mesa;
   final String alias;
-
-  OrdenMesaPantalla({required this.mesa,required this.alias}); 
+  final String usuarioid;
+  OrdenMesaPantalla({required this.mesa,required this.usuarioid,required this.alias}); 
 
   @override
   _OrdenMesaPantallaState createState() => _OrdenMesaPantallaState();
@@ -85,7 +85,7 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CobrarPantalla(mesaId: widget.mesa.id,alias:widget.alias),
+        builder: (context) => CobrarPantalla(mesaId: widget.mesa.id,alias:widget.alias,usuarioid:widget.usuarioid),
       ),
     );
   }

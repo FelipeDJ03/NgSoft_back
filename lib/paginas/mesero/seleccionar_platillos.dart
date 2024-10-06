@@ -212,6 +212,7 @@ class _SeleccionarPlatillosPantallaState extends State<SeleccionarPlatillosPanta
                                                 mesaId: widget.mesaId,
                                                 numeroComensal: widget.numeroComensal,
                                                 alias:widget.alias,
+                                                cocina:producto['cocina']
                                               );
                                             },
                                           ),

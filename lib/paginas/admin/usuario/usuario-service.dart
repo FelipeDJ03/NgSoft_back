@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 class DatabaseMethods {
   Future<void> addusuariosDetalles(Map<String, dynamic> usuariosInfoMap, String id) async {
@@ -17,14 +20,39 @@ class DatabaseMethods {
     return await FirebaseFirestore.instance.collection("usuarios").doc(id).update(actualizarinfo);
   }
 
-  Future<void> Eliminarusuario(String id) async {
-    DocumentSnapshot doc = await FirebaseFirestore.instance.collection("usuarios").doc(id).get();
-    if (doc.exists) {
-      String? imageUrl = doc['image_url'];
-      await FirebaseFirestore.instance.collection("usuarios").doc(id).delete();
-      if (imageUrl != null) {
-        await eliminarImagen(imageUrl);
+ Future<void> Eliminarusuario(String id) async {
+  // Primero, elimina el registro de Firestore
+  
+
+    // Ahora, realiza la petición HTTP para eliminar al usuario en Firebase Auth
+    final url = Uri.parse('http://localhost:4242/eliminarUsuario');  // Cambia '/eliminarUsuario' si es necesario
+    
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'uid': id,  // El 'id' que le pasas a tu endpoint
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print("Usuario eliminado exitosamente de Firebase Auth");
+        DocumentSnapshot doc = await FirebaseFirestore.instance.collection("usuarios").doc(id).get();
+        if (doc.exists) {
+          String? imageUrl = doc['image_url'];
+          await FirebaseFirestore.instance.collection("usuarios").doc(id).delete();
+          if (imageUrl != null) {
+            await eliminarImagen(imageUrl);
+          }
+        }
+      } else {
+        print("Error al eliminar el usuario: ${response.body}");
       }
+    } catch (e) {
+      print("Error de conexión al eliminar el usuario: $e");
     }
   }
 

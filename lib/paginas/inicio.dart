@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ngcomanda/paginas/admin/categorias/lista-categoria.dart';
+import 'package:ngcomanda/paginas/admin/cocinas/lista-cocina.dart';
 import 'package:ngcomanda/paginas/admin/combo/lista-combo.dart';
 import 'package:ngcomanda/paginas/admin/configuracion.dart';
 import 'package:ngcomanda/paginas/admin/mesa/lista-mesa.dart';
@@ -25,6 +26,7 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
   String? _userImageUrl;
   String? alias;
   String? status;
+  String? usuarioid;
   
   bool _isLoading = true;
 
@@ -43,7 +45,7 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
           .get();
 
        alias = userDoc['alias'];
-
+       usuarioid = user.uid;
       // Consultamos el restaurante con el alias como ID
       final restaurantDoc = await FirebaseFirestore.instance
           .collection('restaurantes')
@@ -120,7 +122,7 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
       Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ListaMesas(alias: alias!),
+        builder: (context) => ListaMesas(alias: alias!,usuarioid:usuarioid!),
       ),
     );
       },
@@ -227,6 +229,30 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ListaCategoria(alias: alias!),
+                        ),
+                      );
+                    },
+                  ),
+                  Divider(thickness: 1, color: Colors.grey[300]),
+                ],
+              ),
+            if (_userRole == 'administrador')
+              Column(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.category, color: Colors.orange, size: 35,),
+                    title: Text(
+                      'Cocinas',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop(); 
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Listacocina(alias: alias!),
                         ),
                       );
                     },
@@ -350,7 +376,7 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
                   if (_userRole == 'administrador')
                     Expanded(child: ResumenVWidget(alias:alias!)),
                   if (_userRole == 'cocinero')
-                    Expanded(child: ListaOrdenesCocina(alias:alias!)),
+                    Expanded(child: OrdenesCocinaPage(alias:alias!)),
                   if (_userRole == 'mesero')
                     Expanded(child: OrdenEntregar(alias:alias!)),
                 ],

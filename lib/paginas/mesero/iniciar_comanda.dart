@@ -5,8 +5,8 @@ import '../admin/mesa/mesa-service.dart';
 
 class ListaMesas extends StatefulWidget {
   final String alias;
-
-  const ListaMesas({required this.alias, Key? key}) : super(key: key);
+  final String usuarioid;
+  const ListaMesas({required this.alias,required this.usuarioid, Key? key}) : super(key: key);
 
   @override
   _ListaMesasState createState() => _ListaMesasState();
@@ -87,7 +87,7 @@ class _ListaMesasState extends State<ListaMesas> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => OrdenMesaPantalla(mesa: mesa,alias:widget.alias),
+                              builder: (context) => OrdenMesaPantalla(mesa: mesa,alias:widget.alias,usuarioid:widget.usuarioid),
                             ),
                           );
                         },

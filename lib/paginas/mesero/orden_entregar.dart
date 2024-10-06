@@ -6,6 +6,7 @@ import '../splash.dart';
 class OrdenEntregar extends StatefulWidget {
    final String alias;
 
+
   OrdenEntregar({required this.alias});
   @override
   _OrdenEntregarState createState() => _OrdenEntregarState();

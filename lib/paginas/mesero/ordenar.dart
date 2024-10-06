@@ -74,6 +74,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                         'nota': doc['nota'],
                         'imagen_url': doc['imagen_url'],
                         'alias':widget.alias,
+                        'cocina':doc['cocina']
                       };
                     }).toList();
 

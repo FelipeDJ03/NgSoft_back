@@ -9,6 +9,8 @@ import 'package:ngcomanda/widgets/imagen_usuario.dart';
 import 'package:random_string/random_string.dart';
 import 'package:flutter/services.dart';
 
+enum Disponibilidad { disponible, nodisponible }
+
 class REG_Producto extends StatefulWidget {
   final String alias;
   const REG_Producto({super.key,required this.alias});
@@ -23,9 +25,14 @@ class _REG_ProductoState extends State<REG_Producto> {
   TextEditingController descripcionController = TextEditingController();
   TextEditingController precioController = TextEditingController();
   TextEditingController categoriaController = TextEditingController();
+  TextEditingController cocinaController = TextEditingController();
+
+    Disponibilidad? _selectedDisponibilidad;
+
   File? _imagenSeleccionada;
   var _subiendo = false;
   String? _categoriaSeleccionada;
+  String? _cocinaSeleccionada;
 
  
   void _submit() async {
@@ -75,7 +82,10 @@ class _REG_ProductoState extends State<REG_Producto> {
         "descripcion": descripcionController.text,
         "precio": double.parse(precioController.text),
         "categoria": _categoriaSeleccionada,
+        "cocina": _cocinaSeleccionada,
         "imagen_url": imagenUrl,
+        "delivery":_selectedDisponibilidad == Disponibilidad.disponible ? 'Disponible' : 'nodisponible',
+        "estado":'activo',
         "Id": Id,
         "alias":widget.alias
       };
@@ -372,7 +382,53 @@ class _REG_ProductoState extends State<REG_Producto> {
                         return null;
                       },
                     ),
-
+                    SizedBox(height: 25,),
+                     DropdownButtonFormField<Disponibilidad>(
+                      value: _selectedDisponibilidad,
+                      items: [
+                        DropdownMenuItem(
+                          value: Disponibilidad.disponible,
+                          child: Text('Disponible'),
+                        ),
+                        DropdownMenuItem(
+                          value: Disponibilidad.nodisponible,
+                          child: Text('No disponible'),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedDisponibilidad = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        filled: true, 
+                        fillColor: Color(0xFFffffff),
+                        labelText: 'Disponibilidad en delivery',
+                        labelStyle: TextStyle(
+                          color: Colors.black, 
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFD2691E),
+                            width: 1.3,
+                          ),
+                          borderRadius: BorderRadius.circular(18.0), 
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFD2691E),
+                            width: 1.3,
+                          ),
+                          borderRadius: BorderRadius.circular(18.0), 
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Por favor selecciona una disponibilidad';
+                        }
+                        return null;
+                      },
+                    ),
                     SizedBox(height: 25,),
                     StreamBuilder<QuerySnapshot>(
                       stream: DatabaseMethods().Obtenercategorias(widget.alias),
@@ -424,6 +480,64 @@ class _REG_ProductoState extends State<REG_Producto> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Por favor selecciona una categoría.';
+                              }
+                              return null;
+                            },
+                          );
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 25),
+                    StreamBuilder<QuerySnapshot>(
+                      stream: DatabaseMethods().Obtenercocinas(widget.alias),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                          return Text('No hay cocinas disponibles.');
+                        } else {
+                          var cocinas = snapshot.data!.docs.map((doc) {
+                            return DropdownMenuItem<String>(
+                              value: doc.id,
+                              child: Text(doc['nombre']),
+                            );
+                          }).toList();
+
+                          return DropdownButtonFormField<String>(
+                            value: _cocinaSeleccionada,
+                            items: cocinas,
+                            onChanged: (value) {
+                              setState(() {
+                                _cocinaSeleccionada = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              filled: true, 
+                              fillColor: Color(0xFFffffff),
+                              labelText: 'Cocina',
+                              labelStyle: TextStyle(
+                                color: Colors.black, 
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFD2691E),
+                                  width: 1.3,
+                                ),
+                                borderRadius: BorderRadius.circular(18.0), 
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFD2691E),
+                                  width: 1.3,
+                                ),
+                                borderRadius: BorderRadius.circular(18.0), 
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Por favor selecciona una cocina.';
                               }
                               return null;
                             },

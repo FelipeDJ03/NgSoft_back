@@ -22,6 +22,7 @@ class _EditarUsuarioState extends State<EditarUsuario> {
   TextEditingController celController = TextEditingController();
   File? _imagenSeleccionada;
   String? _imagenUrl;
+  var _enteredRole = 'mesero';
 
   @override
   void initState() {
@@ -49,6 +50,8 @@ class _EditarUsuarioState extends State<EditarUsuario> {
         "apellido": apellidoController.text,
         "direccion": locationController.text,
         "celular": celController.text,
+        'rol': _enteredRole,
+
       };
 
       if (_imagenSeleccionada != null) {
@@ -207,6 +210,60 @@ class _EditarUsuarioState extends State<EditarUsuario> {
                   ),
                 ),
               ),
+             SizedBox(height: 20.0),
+               DropdownButtonFormField<String>(
+                  value: _enteredRole,
+                  items: [
+                    DropdownMenuItem(
+                      value: 'administrador',
+                      child: Text('Administrador'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'mesero',
+                      child: Text('Mesero'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'cocinero',
+                      child: Text('Cocinero'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      _enteredRole = value!;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color(0xFFffffff),
+                    labelText: 'Rol',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0xFFD2691E),
+                        width: 1.3,
+                      ),
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0xFFD2691E),
+                        width: 1.3,
+                      ),
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor selecciona un rol.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _enteredRole = value!;
+                  },
+                ),
               SizedBox(height: 20.0),
               TextField(
                 controller: locationController,

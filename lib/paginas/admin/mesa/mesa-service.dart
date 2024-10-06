@@ -11,7 +11,7 @@ class DatabaseMethods{
 
      Future<Stream<QuerySnapshot>> Obtenermesas(String alias) async {
     return FirebaseFirestore.instance
-        .collection('mesas')
+        .collection('mesa')
         .where('alias', isEqualTo: alias) // Filtrar por el campo alias
         .snapshots();
   }

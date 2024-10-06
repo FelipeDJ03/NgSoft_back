@@ -33,7 +33,8 @@ class CocinaService {
       throw Exception("Error al actualizar el estado del platillo");
     }
   }
-Future<void> terminarCocinar(String ordenId, String platilloId,String mesa) async {
+
+Future<void> terminarCocinar(String ordenId, String platilloId, String mesa, String alias) async {
   try {
     // Referencia al documento de la orden
     DocumentReference ordenRef = _firestore.collection('Orden').doc(ordenId);
@@ -45,10 +46,14 @@ Future<void> terminarCocinar(String ordenId, String platilloId,String mesa) asyn
       // Obtener los platillos de la orden
       List<dynamic> platillos = ordenSnapshot.get('platillos');
 
+      // Variable para verificar si se ha encontrado el platillo
+      bool platilloEncontrado = false;
+
       // Actualizar el estado del platillo correspondiente
       List platillosActualizados = platillos.map((platillo) {
-        if (platillo['Id'] == platilloId) {
+        if (platillo['Id'] == platilloId && !platilloEncontrado) {
           platillo['status'] = 'terminado'; // Cambiar el estado a 'terminado'
+          platilloEncontrado = true;
 
           // Crear un nuevo registro en la colección 'entregar'
           _firestore.collection('entregar').add({
@@ -57,6 +62,7 @@ Future<void> terminarCocinar(String ordenId, String platilloId,String mesa) asyn
             'mesa': mesa,
             'platilloNombre': platillo['nombre'], // Asegúrate de que este campo exista en tu documento
             'status': 'terminado',
+            'alias': alias,
             'timestamp': FieldValue.serverTimestamp(), // Timestamp para cuando se agregó el registro
           });
         }
@@ -73,5 +79,4 @@ Future<void> terminarCocinar(String ordenId, String platilloId,String mesa) asyn
     throw Exception("Error al actualizar el estado del platillo");
   }
 }
-
 }

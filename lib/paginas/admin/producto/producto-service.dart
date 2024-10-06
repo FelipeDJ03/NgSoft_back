@@ -6,6 +6,10 @@ class DatabaseMethods {
   Stream<QuerySnapshot> Obtenercategorias(String alias) {
     return FirebaseFirestore.instance.collection('categoria').where('alias', isEqualTo: alias).snapshots();
   }
+  Stream<QuerySnapshot> Obtenercocinas(String alias) {
+    return FirebaseFirestore.instance.collection('cocina').where('alias', isEqualTo: alias).snapshots();
+  }
+  
 
   Future<Stream<QuerySnapshot>> ObtenerDetalleproductos(String alias) async {
     return await FirebaseFirestore.instance.collection('productos').where('alias', isEqualTo: alias).snapshots();
@@ -60,7 +64,6 @@ class DatabaseMethods {
     }
   }
 
-  
-  
+ 
   
 }

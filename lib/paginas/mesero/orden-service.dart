@@ -12,6 +12,7 @@ class OrdenService {
     required String mesaId,
     required int numeroComensal,
     required String alias,
+    required String cocina,
     int cantidad = 1,
   }) async {
     try {
@@ -25,6 +26,7 @@ class OrdenService {
         'cantidad': cantidad,
         'nota':'normal',
         'alias':alias,
+        'cocina':cocina
       });
     } catch (e) {
       print('Error al agregar producto al carrito: $e');

@@ -1,31 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-////esto hace consultas a la bd
-///
 class DatabaseMethods{
-  Future addcategoriaDetalles(Map<String,dynamic>categoriaInfoMap,String id)async{
+  Future addcocinaDetalles(Map<String,dynamic>cocinaInfoMap,String id)async{
     return await FirebaseFirestore.instance
-    .collection("categoria")
+    .collection("cocina")
     .doc(id)
-    .set(categoriaInfoMap);
+    .set(cocinaInfoMap);
   }
 
 
-  Future<Stream<QuerySnapshot>> Obtenercategorias(String alias)async{
-    return await FirebaseFirestore.instance.collection('categoria').where('alias', isEqualTo: alias).snapshots();
+  Future<Stream<QuerySnapshot>> Obtenercocinas(String alias)async{
+    return await FirebaseFirestore.instance.collection('cocina').where('alias', isEqualTo: alias).snapshots();
   }
 
-  Future actualizardetallecategoria(String id, Map<String,dynamic> actualizarinfo)async{
-    return await FirebaseFirestore.instance.collection("categoria").doc(id).update(actualizarinfo);
+  Future actualizardetallecocina(String id, Map<String,dynamic> actualizarinfo)async{
+    return await FirebaseFirestore.instance.collection("cocina").doc(id).update(actualizarinfo);
   }
 
-Future<void> Eliminarcategoria(String id) async {
+Future<void> Eliminarcocina(String id) async {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   // Obtener todos los documentos de "productos" donde la categoría coincida con el id
   QuerySnapshot productosSnapshot = await firestore
       .collection("productos")
-      .where("categoria", isEqualTo: id)
+      .where("cocina", isEqualTo: id)
       .get();
 
   // Eliminar todos los documentos de "productos" que coincidan
@@ -36,7 +34,7 @@ Future<void> Eliminarcategoria(String id) async {
   // Obtener todos los documentos de "combos" donde la categoría coincida con el id
   QuerySnapshot combosSnapshot = await firestore
       .collection("combos")
-      .where("categoria", isEqualTo: id)
+      .where("cocina", isEqualTo: id)
       .get();
 
   // Eliminar todos los documentos de "combos" que coincidan
@@ -45,12 +43,12 @@ Future<void> Eliminarcategoria(String id) async {
   }
 
   // Finalmente, eliminar el documento de la categoría
-  await firestore.collection("categoria").doc(id).delete();
+  await firestore.collection("cocina").doc(id).delete();
 }
 
-  Future<Map<String, dynamic>?> ObtenerDetallecategorias(String userId) async {
+  Future<Map<String, dynamic>?> ObtenerDetallecocinas(String userId) async {
   try {
-    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance.collection("categoria").doc(userId).get();
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance.collection("cocina").doc(userId).get();
     if (documentSnapshot.exists) {
       return documentSnapshot.data() as Map<String, dynamic>;
     } else {
@@ -62,6 +60,7 @@ Future<void> Eliminarcategoria(String id) async {
     return null;
   }
 }
+
 }
 
 

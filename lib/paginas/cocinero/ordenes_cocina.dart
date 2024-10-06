@@ -1,432 +1,516 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'cocina_service.dart'; 
+import 'package:flutter/widgets.dart';
+import 'cocina_service.dart';
 
-class ListaOrdenesCocina extends StatelessWidget {
+class OrdenesCocinaPage extends StatefulWidget {
   final String alias;
 
-  ListaOrdenesCocina({required this.alias});
+  OrdenesCocinaPage({required this.alias});
+
+  @override
+  _OrdenesCocinaPageState createState() => _OrdenesCocinaPageState();
+}
+
+class _OrdenesCocinaPageState extends State<OrdenesCocinaPage> {
+  String? cocinaSeleccionada;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: obtenerOrdenes(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return Center(child: Text('No hay órdenes disponibles', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black,),));
-        }
-        // Organizar las órdenes por mesa
-        Map<String, List<DocumentSnapshot>> ordenesPorMesa = {};
-        snapshot.data!.docs.forEach((orden) {
-          var mesa = orden['mesa'];
-          if (!ordenesPorMesa.containsKey(mesa)) {
-            ordenesPorMesa[mesa] = [];
-          }
-          ordenesPorMesa[mesa]!.add(orden);
-        }); 
-
-        return OrientationBuilder(
-          builder: (context, orientation) {
-            if (orientation == Orientation.portrait) {
+    return Scaffold(
+  
+      body: Column(
+        children: [
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    cocinaSeleccionada = null;
+                  });
+                },
+                child: Text('General'),
+              ),
+            ),
+          // StreamBuilder para mostrar los registros de la colección 'cocina' como botones
+          StreamBuilder<QuerySnapshot>(
+            stream: obtenerCocinas(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              }
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                return Text('No hay  cocinas');
+              }
               return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: ordenesPorMesa.entries.map((entry) {
-                    String mesa = entry.key;
-                    List<DocumentSnapshot> ordenes = entry.value;
-                    
-                    return Container(
-                      margin: EdgeInsets.only(bottom: 9.0, left: 15, right: 15, top: 6),
-                      child: Card(
-                        color: Color(0xFFFFFDD0),
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                color: Color(0xFFFFA500),
-                                borderRadius: BorderRadius.vertical(top: Radius.circular(10)), 
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.2), 
-                                    spreadRadius: 1, 
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3), 
-                                  ),
-                                ],
-                              ),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Mesa: $mesa',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            Padding(
-                              padding: EdgeInsets.all(10.0),
-                              
-                              child: Column(
-                                children: ordenes.map((orden) {
-                                  List platillos = orden['platillos'];
-
-                                  // Agrupar platillos por ID y filtrar por estado
-                                  Map<String, Map<String, dynamic>> platillosAgrupados = {};
-                                  for (var platillo in platillos) {
-                                    var id = platillo['Id']; // Assuming there's an 'id' field
-                                    if (platillo['status'] == 'terminado') {
-                                      continue; // Omitir platillos con estado 'terminado'
-                                    }
-
-                                    if (!platillosAgrupados.containsKey(id)) {
-                                      platillosAgrupados[id] = {
-                                        'nombre': platillo['nombre'],
-                                        'imagen_url': platillo['imagen_url'],
-                                        'cantidad': 0,
-                                        'precio': platillo['precio'],
-                                        'status': platillo['status'],
-                                        'notas': [],
-                                      };
-                                    }
-                                    platillosAgrupados[id]!['cantidad'] += platillo['cantidad'];
-                                    platillosAgrupados[id]!['notas'].add(platillo['nota']);
-                                  }
-
-                                  return Column(
-                                    children: platillosAgrupados.entries.map((entry) {
-                                      var platillo = entry.value;
-                                                                     
-                                      return Container(
-                                        margin: EdgeInsets.only(bottom: 15.0),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              flex: 2,
-                                              child: Image.network(
-                                                platillo['imagen_url'],
-                                                height: 100.0, 
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (context, error, stackTrace) =>
-                                                    Icon(Icons.food_bank, size: 80, color: Color(0xFFD2691E)),
-                                              ),
-                                            ),
-                                            SizedBox(width: 10.0),
-                                            Expanded(
-                                              flex: 4,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    platillo['nombre'],
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 18.0,
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Cantidad: ${platillo['cantidad']}',
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 14.0,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Estado: ${platillo['status']}',
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 14.0,
-                                                    ),
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: platillo['notas'].map<Widget>((nota) {
-                                                      return Text(
-                                                        'Nota: $nota',
-                                                        style: TextStyle(color: Colors.black),
-                                                      );
-                                                    }).toList(),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            SizedBox(width: 10.0),
-                                            Expanded(
-                                              flex: 2,
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  if (platillo['status'] == 'pendiente')
-                                                    TextButton(
-                                                      onPressed: () => ModalEmpezar(
-                                                        context,
-                                                        orden.id,
-                                                        entry.key, // ID del platillo
-                                                        platillo['nombre'],
-                                                        platillo['Id'], // ID del platillo
-                                                      ),
-                                                      child: Text('Empezar'),
-                                                      style: TextButton.styleFrom(
-                                                        foregroundColor: Colors.white,
-                                                        backgroundColor: Colors.green, 
-                                                      ),
-                                                    ),
-                                                  if (platillo['status'] == 'empezado')
-                                                    TextButton(
-                                                      onPressed: () => ModalTerminar(
-                                                        context,
-                                                        orden.id,
-                                                        entry.key, // ID del platillo
-                                                        platillo['nombre'],
-                                                        platillo['Id'],
-                                                        orden['mesa'], // ID del platillo
-                                                      ),
-                                                      child: Text('Terminar'),
-                                                      style: TextButton.styleFrom(
-                                                        foregroundColor: Colors.white,
-                                                        backgroundColor: Color(0xFFFFA500), 
-                                                      ),
-                                                    ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );                                   
-                                    }).toList(),
-                                  );
-                                }).toList(),
-                              ),
-                              
-                            ),
-                          ],
-                        ),
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: snapshot.data!.docs.map((doc) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            cocinaSeleccionada = doc['Id'];
+                          });
+                        },
+                        child: Text(doc['nombre']), // Ajusta según los campos de tu documento
                       ),
                     );
                   }).toList(),
                 ),
               );
-            } else {
-              return SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: ordenesPorMesa.entries.map((entry) {
-                    String mesa = entry.key;
-                    List<DocumentSnapshot> ordenes = entry.value;
-                   return Container(
-                    width: MediaQuery.of(context).size.width / 3, // Limit column width               
-                    child: Card(
-                    color: Color(0xFFFFFDD0),
-                    margin: EdgeInsets.only(bottom: 9.0, left: 15, right: 15, top: 6),
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFFFA500),
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(10)), 
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2), 
-                                spreadRadius: 1, 
-                                blurRadius: 5,
-                                offset: Offset(0, 3), 
+            },
+          ),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: obtenerOrdenes(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return Center(child: Text('No hay órdenes disponibles', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black,),));
+                }
+                // Organizar las órdenes por mesa
+                Map<String, List<DocumentSnapshot>> ordenesPorMesa = {};
+                snapshot.data!.docs.forEach((orden) {
+                  var mesa = orden['mesa'];
+                  if (!ordenesPorMesa.containsKey(mesa)) {
+                    ordenesPorMesa[mesa] = [];
+                  }
+                  ordenesPorMesa[mesa]!.add(orden);
+                });
+
+                return OrientationBuilder(
+                  builder: (context, orientation) {
+                    if (orientation == Orientation.portrait) {
+                      return SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: ordenesPorMesa.entries.map((entry) {
+                            String mesa = entry.key;
+                            List<DocumentSnapshot> ordenes = entry.value;
+
+                            return Container(
+                              margin: EdgeInsets.only(bottom: 9.0, left: 15, right: 15, top: 6),
+                              child: Card(
+                                color: Color(0xFFFFFDD0),
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(10.0),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFFFA500),
+                                        borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(0.2),
+                                            spreadRadius: 1,
+                                            blurRadius: 5,
+                                            offset: Offset(0, 3),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          'Mesa: $mesa',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Column(
+                                        children: ordenes.map((orden) {
+                                          List platillos = orden['platillos'];
+
+                                          // Agrupar platillos por ID y filtrar por estado
+                                          Map<String, Map<String, dynamic>> platillosAgrupados = {};
+                                          for (var platillo in platillos) {
+                                            var id = platillo['Id']; // Assuming there's an 'id' field
+                                            if (platillo['status'] == 'terminado') {
+                                              continue; // Omitir platillos con estado 'terminado'
+                                            }
+
+                                            if (cocinaSeleccionada != null && platillo['cocina'] != cocinaSeleccionada) {
+                                              continue; // Filtrar por cocina seleccionada
+                                            }
+
+                                            if (!platillosAgrupados.containsKey(id)) {
+                                              platillosAgrupados[id] = {
+                                                'nombre': platillo['nombre'],
+                                                'imagen_url': platillo['imagen_url'],
+                                                'cantidad': 0,
+                                                'precio': platillo['precio'],
+                                                'status': platillo['status'],
+                                                'cocina': platillo['cocina'],
+                                                'notas': [],
+                                              };
+                                            }
+                                            platillosAgrupados[id]!['cantidad'] += platillo['cantidad'];
+                                            platillosAgrupados[id]!['notas'].add(platillo['nota']);
+                                          }
+
+                                          return Column(
+                                            children: platillosAgrupados.entries.map((entry) {
+                                              var platillo = entry.value;
+
+                                              return Container(
+                                                margin: EdgeInsets.only(bottom: 15.0),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Image.network(
+                                                        platillo['imagen_url'],
+                                                        height: 100.0,
+                                                        fit: BoxFit.cover,
+                                                        errorBuilder: (context, error, stackTrace) =>
+                                                            Icon(Icons.food_bank, size: 80, color: Color(0xFFD2691E)),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10.0),
+                                                    Expanded(
+                                                      flex: 4,
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            platillo['nombre'],
+                                                            textAlign: TextAlign.left,
+                                                            style: TextStyle(
+                                                              color: Colors.black,
+                                                              fontSize: 18.0,
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Cantidad: ${platillo['cantidad']}',
+                                                            textAlign: TextAlign.left,
+                                                            style: TextStyle(
+                                                              color: Colors.black,
+                                                              fontSize: 14.0,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Estado: ${platillo['status']}',
+                                                            textAlign: TextAlign.left,
+                                                            style: TextStyle(
+                                                              color: Colors.black,
+                                                              fontSize: 14.0,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Cocina: ${platillo['cocina']}',
+                                                            textAlign: TextAlign.left,
+                                                            style: TextStyle(
+                                                              color: Colors.black,
+                                                              fontSize: 14.0,
+                                                            ),
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: platillo['notas'].map<Widget>((nota) {
+                                                              return Text(
+                                                                'Nota: $nota',
+                                                                style: TextStyle(color: Colors.black),
+                                                              );
+                                                            }).toList(),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10.0),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          if (platillo['status'] == 'pendiente')
+                                                            TextButton(
+                                                              onPressed: () => ModalEmpezar(
+                                                                context,
+                                                                orden.id,
+                                                                entry.key, // ID del platillo
+                                                                platillo['nombre'],
+                                                                platillo['Id'], // ID del platillo
+                                                              ),
+                                                              child: Text('Empezar'),
+                                                              style: TextButton.styleFrom(
+                                                                foregroundColor: Colors.white,
+                                                                backgroundColor: Colors.green,
+                                                              ),
+                                                            ),
+                                                          if (platillo['status'] == 'empezado')
+                                                            TextButton(
+                                                              onPressed: () => ModalTerminar(
+                                                                context,
+                                                                orden.id,
+                                                                entry.key, // ID del platillo
+                                                                platillo['nombre'],
+                                                                platillo['Id'],
+                                                                orden['mesa'], // ID del platillo
+                                                              ),
+                                                              child: Text('Terminar'),
+                                                              style: TextButton.styleFrom(
+                                                                foregroundColor: Colors.white,
+                                                                backgroundColor: Color(0xFFFFA500),
+                                                              ),
+                                                            ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            }).toList(),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Mesa: $mesa',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
+                            );
+                          }).toList(),
                         ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Column(
-                                children: ordenes.map((orden) {
-                                  List platillos = orden['platillos'];
+                      );
+                    } else {
+                      // Código para orientación horizontal (landscape)
+                      return SingleChildScrollView(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: ordenesPorMesa.entries.map((entry) {
+                            String mesa = entry.key;
+                            List<DocumentSnapshot> ordenes = entry.value;
 
-                                  // Agrupar platillos por ID y filtrar por estado
-                                  Map<String, Map<String, dynamic>> platillosAgrupados = {};
-                                  for (var platillo in platillos) {
-                                    var id = platillo['Id']; // Assuming there's an 'id' field
-                                    if (platillo['status'] == 'terminado') {
-                                      continue; // Omitir platillos con estado 'terminado'
-                                    }
-
-                                    if (!platillosAgrupados.containsKey(id)) {
-                                      platillosAgrupados[id] = {
-                                        'nombre': platillo['nombre'],
-                                        'imagen_url': platillo['imagen_url'],
-                                        'cantidad': 0,
-                                        'precio': platillo['precio'],
-                                        'status': platillo['status'],
-                                        'notas': [],
-                                      };
-                                    }
-                                    platillosAgrupados[id]!['cantidad'] += platillo['cantidad'];
-                                    platillosAgrupados[id]!['notas'].add(platillo['nota']);
-                                  }
-
-                                  return Column(
-                                    children: platillosAgrupados.entries.map((entry) {
-                                      var platillo = entry.value;
-
-                                      return Container(
-                                        margin: EdgeInsets.only(bottom: 15.0),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              flex: 2,
-                                              child: Image.network(
-                                                platillo['imagen_url'],
-                                                height: 100.0, 
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (context, error, stackTrace) =>
-                                                    Icon(Icons.food_bank, size: 80, color: Color(0xFFD2691E)),
-                                              ),
-                                            ),
-                                            SizedBox(width: 10.0),
-                                            Expanded(
-                                              flex: 4,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    platillo['nombre'],
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 18.0,
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Cantidad: ${platillo['cantidad']}',
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 14.0,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Estado: ${platillo['status']}',
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 14.0,
-                                                    ),
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: platillo['notas'].map<Widget>((nota) {
-                                                      return Text(
-                                                        'Nota: $nota',
-                                                        style: TextStyle(color: Colors.black),
-                                                      );
-                                                    }).toList(),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            SizedBox(width: 10.0),
-                                            Expanded(
-                                              flex: 2,
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  if (platillo['status'] == 'pendiente')
-                                                    TextButton(
-                                                      onPressed: () => ModalEmpezar(
-                                                        context,
-                                                        orden.id,
-                                                        entry.key, // ID del platillo
-                                                        platillo['nombre'],
-                                                        platillo['Id'], // ID del platillo
-                                                      ),
-                                                      child: Text('Empezar'),
-                                                      style: TextButton.styleFrom(
-                                                        foregroundColor: Colors.white,
-                                                        backgroundColor: Colors.green, 
-                                                      ),
-                                                    ),
-                                                  if (platillo['status'] == 'empezado')
-                                                    TextButton(
-                                                      onPressed: () => ModalTerminar(
-                                                        context,
-                                                        orden.id,
-                                                        entry.key, // ID del platillo
-                                                        platillo['nombre'],
-                                                        platillo['Id'],
-                                                        orden['mesa'], // ID del platillo
-                                                      ),
-                                                      child: Text('Terminar'),
-                                                      style: TextButton.styleFrom(
-                                                        foregroundColor: Colors.white,
-                                                        backgroundColor: Color(0xFFFFA500), 
-                                                      ),
-                                                    ),
-                                                ],
-                                              ),
+                            return Expanded(
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 9.0, left: 15, right: 15, top: 6),
+                                child: Card(
+                                  color: Color(0xFFFFFDD0),
+                                  elevation: 4,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(10.0),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFFFA500),
+                                          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.2),
+                                              spreadRadius: 1,
+                                              blurRadius: 5,
+                                              offset: Offset(0, 3),
                                             ),
                                           ],
                                         ),
-                                      );
-                                    }).toList(),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Mesa: $mesa',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: Column(
+                                          children: ordenes.map((orden) {
+                                            List platillos = orden['platillos'];
 
-                  );
-                  }).toList(),
-                ),
-              );
-            }
-          },
-        );
-      },
+                                            // Agrupar platillos por ID y filtrar por estado
+                                            Map<String, Map<String, dynamic>> platillosAgrupados = {};
+                                            for (var platillo in platillos) {
+                                              var id = platillo['Id']; // Assuming there's an 'id' field
+                                              if (platillo['status'] == 'terminado') {
+                                                continue; // Omitir platillos con estado 'terminado'
+                                              }
+
+                                              if (cocinaSeleccionada != null && platillo['cocina'] != cocinaSeleccionada) {
+                                                continue; // Filtrar por cocina seleccionada
+                                              }
+
+                                              if (!platillosAgrupados.containsKey(id)) {
+                                                platillosAgrupados[id] = {
+                                                  'nombre': platillo['nombre'],
+                                                  'imagen_url': platillo['imagen_url'],
+                                                  'cantidad': 0,
+                                                  'precio': platillo['precio'],
+                                                  'status': platillo['status'],
+                                                  'cocina': platillo['cocina'],
+                                                  'notas': [],
+                                                };
+                                              }
+                                              platillosAgrupados[id]!['cantidad'] += platillo['cantidad'];
+                                              platillosAgrupados[id]!['notas'].add(platillo['nota']);
+                                            }
+
+                                            return Column(
+                                              children: platillosAgrupados.entries.map((entry) {
+                                                var platillo = entry.value;
+
+                                                return Container(
+                                                  margin: EdgeInsets.only(bottom: 15.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: Image.network(
+                                                          platillo['imagen_url'],
+                                                          height: 100.0,
+                                                          fit: BoxFit.cover,
+                                                          errorBuilder: (context, error, stackTrace) =>
+                                                              Icon(Icons.food_bank, size: 80, color: Color(0xFFD2691E)),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10.0),
+                                                      Expanded(
+                                                        flex: 4,
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Text(
+                                                              platillo['nombre'],
+                                                              textAlign: TextAlign.left,
+                                                              style: TextStyle(
+                                                                color: Colors.black,
+                                                                fontSize: 18.0,
+                                                                fontWeight: FontWeight.bold,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              'Cantidad: ${platillo['cantidad']}',
+                                                              textAlign: TextAlign.left,
+                                                              style: TextStyle(
+                                                                color: Colors.black,
+                                                                fontSize: 14.0,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              'Estado: ${platillo['status']}',
+                                                              textAlign: TextAlign.left,
+                                                              style: TextStyle(
+                                                                color: Colors.black,
+                                                                fontSize: 14.0,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              'Cocina: ${platillo['cocina']}',
+                                                              textAlign: TextAlign.left,
+                                                              style: TextStyle(
+                                                                color: Colors.black,
+                                                                fontSize: 14.0,
+                                                              ),
+                                                            ),
+                                                            Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              children: platillo['notas'].map<Widget>((nota) {
+                                                                return Text(
+                                                                  'Nota: $nota',
+                                                                  style: TextStyle(color: Colors.black),
+                                                                );
+                                                              }).toList(),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10.0),
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          children: [
+                                                            if (platillo['status'] == 'pendiente')
+                                                              TextButton(
+                                                                onPressed: () => ModalEmpezar(
+                                                                  context,
+                                                                  orden.id,
+                                                                  entry.key, // ID del platillo
+                                                                  platillo['nombre'],
+                                                                  platillo['Id'], // ID del platillo
+                                                                ),
+                                                                child: Text('Empezar'),
+                                                                style: TextButton.styleFrom(
+                                                                  foregroundColor: Colors.white,
+                                                                  backgroundColor: Colors.green,
+                                                                ),
+                                                              ),
+                                                            if (platillo['status'] == 'empezado')
+                                                              TextButton(
+                                                                onPressed: () => ModalTerminar(
+                                                                  context,
+                                                                  orden.id,
+                                                                  entry.key, // ID del platillo
+                                                                  platillo['nombre'],
+                                                                  platillo['Id'],
+                                                                  orden['mesa'], // ID del platillo
+                                                                ),
+                                                                child: Text('Terminar'),
+                                                                style: TextButton.styleFrom(
+                                                                  foregroundColor: Colors.white,
+                                                                  backgroundColor: Color(0xFFFFA500),
+                                                                ),
+                                                              ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    }
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
-
+  
   Stream<QuerySnapshot> obtenerOrdenes() {
-    return FirebaseFirestore.instance.collection('Orden').where('alias', isEqualTo: alias).snapshots();
+    return FirebaseFirestore.instance.collection('Orden').where('alias', isEqualTo: widget.alias).snapshots();
+  }
+  Stream<QuerySnapshot> obtenerCocinas() {
+    return FirebaseFirestore.instance.collection('cocina').where('alias', isEqualTo: widget.alias).snapshots();
   }
 
   void ModalEmpezar(BuildContext context, String ordenId, String platilloID, String platilloNombre, platillo) {
@@ -602,7 +686,7 @@ class ListaOrdenesCocina extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).pop();
                           // Llamar al servicio para actualizar el estado
-                          CocinaService().terminarCocinar(ordenId, platilloID, mesa);
+                          CocinaService().terminarCocinar(ordenId, platilloID, mesa,widget.alias);
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white, 
