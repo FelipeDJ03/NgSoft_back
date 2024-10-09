@@ -32,3 +32,20 @@ Future<void> mostrarNotificacion( String s)async{
       '"$s" listo para entregar', 
       notificationDetails);
 }
+Future<void> mostrarNotificacioncocina( String s)async{
+  const AndroidNotificationDetails androidNotificationDetails=
+  AndroidNotificationDetails('Pedido', 'H');
+
+  const DarwinNotificationDetails darwinNotificationDetails=DarwinNotificationDetails();
+
+  const NotificationDetails notificationDetails = NotificationDetails(
+    android: androidNotificationDetails,
+    iOS: darwinNotificationDetails
+  );
+
+  await flutterLocalNotificationsPlugin.show(
+      1, 
+      'Pedido a cocina', 
+      '"$s" ah llegado', 
+      notificationDetails);
+}

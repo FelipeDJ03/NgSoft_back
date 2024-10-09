@@ -62,6 +62,8 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                       }
                       productosPorComensal[comensal]!.add(producto);
                     }
+                    // Ordenar los comensales en forma ascendente
+                    var comensalesOrdenados = productosPorComensal.keys.toList()..sort();
 
                     // Guardar platillos para enviar y calcular el total
                     _platillos = carrito.map((doc) {
@@ -86,7 +88,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                     return ListView.builder(
                       itemCount: productosPorComensal.length,
                       itemBuilder: (ctx, index) {
-                        int comensal = productosPorComensal.keys.elementAt(index);
+                        int comensal = comensalesOrdenados[index]; // Obtener el comensal en orden ascendente
                         var productos = productosPorComensal[comensal];
 
                         return Column(

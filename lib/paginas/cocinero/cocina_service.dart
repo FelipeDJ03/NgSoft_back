@@ -17,7 +17,7 @@ class CocinaService {
 
         // Actualizar el estado del platillo correspondiente
         List platillosActualizados = platillos.map((platillo) {
-          if (platillo['Id'] == platilloId) {
+          if (platillo['Id'] == platilloId && platillo['status'] == 'pendiente') {
             platillo['status'] = 'empezado'; // Cambiar el estado a 'empezado'
           }
           return platillo;
@@ -47,13 +47,11 @@ Future<void> terminarCocinar(String ordenId, String platilloId, String mesa, Str
       List<dynamic> platillos = ordenSnapshot.get('platillos');
 
       // Variable para verificar si se ha encontrado el platillo
-      bool platilloEncontrado = false;
 
       // Actualizar el estado del platillo correspondiente
       List platillosActualizados = platillos.map((platillo) {
-        if (platillo['Id'] == platilloId && !platilloEncontrado) {
+        if (platillo['Id'] == platilloId  && platillo['status'] == 'empezado' ) {
           platillo['status'] = 'terminado'; // Cambiar el estado a 'terminado'
-          platilloEncontrado = true;
 
           // Crear un nuevo registro en la colección 'entregar'
           _firestore.collection('entregar').add({

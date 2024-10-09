@@ -105,6 +105,15 @@ class _ListaProductoState extends State<ListaProducto> {
                                 fontSize: 14.0,
                               ),
                             ),
+                            SizedBox(height: 10.0),
+                            Text(
+                              "${ds['disponibilidad']}",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14.0,
+                              ),
+                            ),
                             SizedBox(height: 10),
                             Text(
                               "\$${ds['precio']}",

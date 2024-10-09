@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagenUsuarioPicker extends StatefulWidget {
-  const ImagenUsuarioPicker({super.key, required this.onPickImage});
+  const ImagenUsuarioPicker({
+    super.key, 
+    required this.onPickImage, 
+    this.imagenPredeterminadaURL,
+  });
+
   final void Function(File imagenElegida) onPickImage;
+  final String? imagenPredeterminadaURL; // URL de la imagen predeterminada
 
   @override
   State<ImagenUsuarioPicker> createState() {
@@ -63,8 +69,6 @@ class _ImagenUsuarioPickerState extends State<ImagenUsuarioPicker> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -75,23 +79,20 @@ class _ImagenUsuarioPickerState extends State<ImagenUsuarioPicker> {
           child: CircleAvatar(
             radius: 40,
             backgroundColor: Colors.grey,
-            foregroundImage: 
-            _imagenElegidaFile != null ? FileImage(_imagenElegidaFile!) : null,
+            foregroundImage: _imagenElegidaFile != null
+                ? FileImage(_imagenElegidaFile!)
+                : (widget.imagenPredeterminadaURL != null
+                    ? NetworkImage(widget.imagenPredeterminadaURL!) as ImageProvider
+                    : null),
           ),
         ),
         const SizedBox(height: 10),
         TextButton.icon(
           onPressed: _showImageSourceDialog,
-          icon: Stack(
-            children: [
-              const Icon(Icons.camera_alt_outlined, color: Colors.black,),
-            ],
-          ),
-          label: Text(
+          icon: const Icon(Icons.camera_alt_outlined, color: Colors.black),
+          label: const Text(
             'Añadir imagen',
-            style: TextStyle(
-              color: Colors.black,
-            ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ],

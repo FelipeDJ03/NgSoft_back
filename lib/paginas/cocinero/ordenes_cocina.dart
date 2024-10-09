@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+import 'package:ngcomanda/paginas/cocinero/ordenes_cocina_por_cocinas.dart';
 import 'cocina_service.dart';
 
 class OrdenesCocinaPage extends StatefulWidget {
@@ -21,6 +22,21 @@ class _OrdenesCocinaPageState extends State<OrdenesCocinaPage> {
   
       body: Column(
         children: [
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                   Navigator.of(context).pop(); 
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OrdenesCocina_porCocinaPage(alias:widget.alias),
+                        ),
+                      );
+                },
+                child: Text('Ver por mesas'),
+              ),
+            ),
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
@@ -95,7 +111,7 @@ class _OrdenesCocinaPageState extends State<OrdenesCocinaPage> {
                           children: ordenesPorMesa.entries.map((entry) {
                             String mesa = entry.key;
                             List<DocumentSnapshot> ordenes = entry.value;
-
+                            
                             return Container(
                               margin: EdgeInsets.only(bottom: 9.0, left: 15, right: 15, top: 6),
                               child: Card(
@@ -103,7 +119,8 @@ class _OrdenesCocinaPageState extends State<OrdenesCocinaPage> {
                                 elevation: 4,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                ),
+                                )
+                                ,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

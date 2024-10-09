@@ -10,6 +10,7 @@ import 'package:random_string/random_string.dart';
 import 'package:flutter/services.dart';
 
 enum Disponibilidad { disponible, nodisponible }
+enum Habilitado { disponible, nodisponible }
 
 class REG_Producto extends StatefulWidget {
   final String alias;
@@ -26,8 +27,10 @@ class _REG_ProductoState extends State<REG_Producto> {
   TextEditingController precioController = TextEditingController();
   TextEditingController categoriaController = TextEditingController();
   TextEditingController cocinaController = TextEditingController();
+  TextEditingController minutosController = TextEditingController();
 
     Disponibilidad? _selectedDisponibilidad;
+    Habilitado? _selectedHabilitado;
 
   File? _imagenSeleccionada;
   var _subiendo = false;
@@ -85,7 +88,9 @@ class _REG_ProductoState extends State<REG_Producto> {
         "cocina": _cocinaSeleccionada,
         "imagen_url": imagenUrl,
         "delivery":_selectedDisponibilidad == Disponibilidad.disponible ? 'Disponible' : 'nodisponible',
+        "disponibilidad":_selectedHabilitado == Habilitado.disponible ? 'Disponible' : 'nodisponible',
         "estado":'activo',
+        "tiempo":double.parse(minutosController.text),
         "Id": Id,
         "alias":widget.alias
       };
@@ -382,6 +387,48 @@ class _REG_ProductoState extends State<REG_Producto> {
                         return null;
                       },
                     ),
+                    SizedBox(height: 25,),               
+                    TextFormField(
+                      controller: minutosController, // Cambia este controlador para capturar los minutos
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFffffff),
+                        labelText: 'Tiempo de preparacion (minutos)', // Cambia el texto para indicar que es para minutos
+                        labelStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFD2691E),
+                            width: 1.3,
+                          ),
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFD2691E),
+                            width: 1.3,
+                          ),
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly, // Solo permite dígitos (números enteros)
+                      ],
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Por favor ingresa los minutos.';
+                        }
+                        if (int.tryParse(value) == null) {
+                          return 'Por favor ingresa un número válido.';
+                        }
+                        if (int.parse(value) < 0) {
+                          return 'Por favor ingresa un número positivo.';
+                        }
+                        return null;
+                      },
+                    ),
                     SizedBox(height: 25,),
                      DropdownButtonFormField<Disponibilidad>(
                       value: _selectedDisponibilidad,
@@ -404,6 +451,53 @@ class _REG_ProductoState extends State<REG_Producto> {
                         filled: true, 
                         fillColor: Color(0xFFffffff),
                         labelText: 'Disponibilidad en delivery',
+                        labelStyle: TextStyle(
+                          color: Colors.black, 
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFD2691E),
+                            width: 1.3,
+                          ),
+                          borderRadius: BorderRadius.circular(18.0), 
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFD2691E),
+                            width: 1.3,
+                          ),
+                          borderRadius: BorderRadius.circular(18.0), 
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Por favor selecciona una disponibilidad';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 25,),
+                     DropdownButtonFormField<Habilitado>(
+                      value: _selectedHabilitado,
+                      items: [
+                        DropdownMenuItem(
+                          value: Habilitado.disponible,
+                          child: Text('Disponible'),
+                        ),
+                        DropdownMenuItem(
+                          value: Habilitado.nodisponible,
+                          child: Text('No disponible'),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedHabilitado = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        filled: true, 
+                        fillColor: Color(0xFFffffff),
+                        labelText: 'Disponible en cocina',
                         labelStyle: TextStyle(
                           color: Colors.black, 
                         ),

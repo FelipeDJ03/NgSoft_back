@@ -138,7 +138,7 @@ class _SeleccionarPlatillosPantallaState extends State<SeleccionarPlatillosPanta
                   Expanded(
                     child: FutureBuilder<List<QuerySnapshot>>(
                       future: Future.wait([
-                        FirebaseFirestore.instance.collection('productos').where('alias', isEqualTo: widget.alias).get(),
+                        FirebaseFirestore.instance.collection('productos').where('alias', isEqualTo: widget.alias).where('disponibilidad', isEqualTo: 'Disponible').get(),
                         FirebaseFirestore.instance.collection('combos').where('alias', isEqualTo: widget.alias).get(),
                       ]),
                       builder: (ctx, snapshot) {
@@ -207,7 +207,7 @@ class _SeleccionarPlatillosPantallaState extends State<SeleccionarPlatillosPanta
                                               await OrdenService().agregarProductoAlCarrito(
                                                 Id:producto['Id'],
                                                 nombre: producto['nombre'],
-                                                precio: producto['precio'],
+                                                precio: (producto['precio'] as num).toDouble(),   
                                                 imagenUrl: producto['imagen_url'],
                                                 mesaId: widget.mesaId,
                                                 numeroComensal: widget.numeroComensal,

@@ -7,6 +7,7 @@ import '../../../widgets/imagen_usuario.dart';
 import 'producto-service.dart';
 
 enum Disponibilidad { disponible, nodisponible }
+enum Habilitado { disponible, nodisponible }
 
 class Editarproducto extends StatefulWidget {
   final String userId;
@@ -21,7 +22,9 @@ class _EditarproductoState extends State<Editarproducto> {
   TextEditingController nameController = TextEditingController();
   TextEditingController descripcionController = TextEditingController();
   TextEditingController precioController = TextEditingController();
+  TextEditingController minutosController = TextEditingController();
     Disponibilidad? _selectedDisponibilidad;
+    Habilitado? _selectedHabilitado;
 
   File? _imagenSeleccionada;
   String? _imagenUrl;
@@ -32,19 +35,28 @@ class _EditarproductoState extends State<Editarproducto> {
     obtenerDetalleproducto();
   }
 
-  Future<void> obtenerDetalleproducto() async {
-    Map<String, dynamic>? producto = await DatabaseMethods().obtenerDetalleproducto(widget.userId);
-    if (producto != null) {
-      setState(() {
-        nameController.text = producto['nombre'];
-        descripcionController.text = producto['descripcion'];
-        precioController.text = producto['precio'].toString();
-        _imagenUrl = producto['imagen_url'];
-        _selectedDisponibilidad = producto['delivery'] ; // Establece el valor seleccionado
-
-      });
-    }
+Future<void> obtenerDetalleproducto() async {
+  Map<String, dynamic>? producto = await DatabaseMethods().obtenerDetalleproducto(widget.userId);
+  if (producto != null) {
+    setState(() {
+      nameController.text = producto['nombre'];
+      descripcionController.text = producto['descripcion'];
+      precioController.text = producto['precio'].toString();
+      _imagenUrl = producto['imagen_url'];
+      
+      // Convertir valores Firestore a los enums correspondientes
+      _selectedDisponibilidad = producto['delivery'] == 'Disponible'
+          ? Disponibilidad.disponible
+          : Disponibilidad.nodisponible;
+      _selectedHabilitado = producto['disponibilidad'] == 'Disponible'
+          ? Habilitado.disponible
+          : Habilitado.nodisponible;
+      
+      minutosController.text = producto['tiempo'].toString();
+    });
   }
+}
+
 
   Future<void> actualizarproducto() async {
     try {
@@ -52,7 +64,9 @@ class _EditarproductoState extends State<Editarproducto> {
         "nombre": nameController.text,
         "descripcion": descripcionController.text,
         "delivery": _selectedDisponibilidad  == Disponibilidad.disponible ? 'Disponible' : 'nodisponible',
+        "disponibilidad":_selectedHabilitado == Habilitado.disponible ? 'Disponible' : 'nodisponible',
         "precio": double.parse(precioController.text),
+        "tiempo": double.parse(minutosController.text),
       };
 
       if (_imagenSeleccionada != null) {
@@ -149,12 +163,13 @@ class _EditarproductoState extends State<Editarproducto> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 10.0),
-              ImagenUsuarioPicker(
+             ImagenUsuarioPicker(
                 onPickImage: (imagenElegida) {
                   setState(() {
                     _imagenSeleccionada = imagenElegida;
                   });
                 },
+                imagenPredeterminadaURL: _imagenUrl, // Usar la URL obtenida del producto
               ),
               SizedBox(height: 20.0),
               TextField(
@@ -238,6 +253,36 @@ class _EditarproductoState extends State<Editarproducto> {
                   FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
                 ],
               ),
+              SizedBox(height: 20.0),
+              TextField(
+                controller: minutosController,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Color(0xFFffffff),
+                  labelText: 'Tiempo de preparación (minutos)',
+                  labelStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0xFFD2691E),
+                      width: 1.3,
+                    ),
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0xFFD2691E),
+                      width: 1.3,
+                    ),
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                ],
+              ),
                SizedBox(height: 25,),
                      DropdownButtonFormField<Disponibilidad>(
                       value: _selectedDisponibilidad,
@@ -260,6 +305,53 @@ class _EditarproductoState extends State<Editarproducto> {
                         filled: true, 
                         fillColor: Color(0xFFffffff),
                         labelText: 'Disponibilidad en delivery',
+                        labelStyle: TextStyle(
+                          color: Colors.black, 
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFD2691E),
+                            width: 1.3,
+                          ),
+                          borderRadius: BorderRadius.circular(18.0), 
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFD2691E),
+                            width: 1.3,
+                          ),
+                          borderRadius: BorderRadius.circular(18.0), 
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Por favor selecciona una disponibilidad';
+                        }
+                        return null;
+                      },
+                    ),
+               SizedBox(height: 25,),
+                     DropdownButtonFormField<Habilitado>(
+                      value: _selectedHabilitado,
+                      items: [
+                        DropdownMenuItem(
+                          value: Habilitado.disponible,
+                          child: Text('Disponible'),
+                        ),
+                        DropdownMenuItem(
+                          value: Habilitado.nodisponible,
+                          child: Text('No disponible'),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedHabilitado = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        filled: true, 
+                        fillColor: Color(0xFFffffff),
+                        labelText: 'Disponibilidad en cocina',
                         labelStyle: TextStyle(
                           color: Colors.black, 
                         ),
@@ -314,3 +406,5 @@ class _EditarproductoState extends State<Editarproducto> {
     );
   }
 }
+
+

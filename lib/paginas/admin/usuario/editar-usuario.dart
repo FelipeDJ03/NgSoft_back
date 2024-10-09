@@ -157,6 +157,7 @@ class _EditarUsuarioState extends State<EditarUsuario> {
                     _imagenSeleccionada = imagenElegida;
                   });
                 },
+                imagenPredeterminadaURL: _imagenUrl, // Usar la URL obtenida del producto
               ),
               const SizedBox(height: 20),
               TextField(

@@ -284,7 +284,7 @@ class _REG_ComboState extends State<REG_Combo> {
               Expanded(
                 child: FutureBuilder<List<QuerySnapshot>>(
                   future: Future.wait([
-                    FirebaseFirestore.instance.collection('productos').where('alias', isEqualTo: widget.alias).get(),
+                    FirebaseFirestore.instance.collection('productos').where('alias', isEqualTo: widget.alias).where('disponibilidad', isEqualTo: 'Disponible').get(),
                     FirebaseFirestore.instance.collection('combos').where('alias', isEqualTo: widget.alias).get(),
                   ]),
                   builder: (ctx, snapshot) {
