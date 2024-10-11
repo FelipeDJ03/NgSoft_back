@@ -10,7 +10,9 @@ final _firebase = FirebaseAuth.instance;
 
 class REG_USUARIOPagina extends StatefulWidget {
   final String alias;
-  const REG_USUARIOPagina({super.key,required this.alias});
+      final List<Color?> coloresRestaurante;
+
+  const REG_USUARIOPagina({super.key,required this.alias,required this.coloresRestaurante});
 
   @override
   State<StatefulWidget> createState() {

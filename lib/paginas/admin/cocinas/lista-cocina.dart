@@ -9,7 +9,9 @@ import 'cocina-service.dart';
 
 class Listacocina extends StatefulWidget {
   final String alias;
-  const Listacocina({super.key,required this.alias});
+      final List<Color?> coloresRestaurante;
+
+  const Listacocina({super.key,required this.alias,required this.coloresRestaurante});
     
  
 
@@ -36,7 +38,7 @@ class _ListacocinaState extends State<Listacocina> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Editarcocina(userId: userId),
+        builder: (context) => Editarcocina(userId: userId,coloresRestaurante:widget.coloresRestaurante),
       ),
     );
   }
@@ -154,7 +156,7 @@ class _ListacocinaState extends State<Listacocina> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => REG_cocina(alias: widget.alias)));
+              context, MaterialPageRoute(builder: (context) => REG_cocina(alias: widget.alias,coloresRestaurante:widget.coloresRestaurante)));
         },
         child: Icon(Icons.add, color: Colors.white),
         backgroundColor: Color(0xFFD2691E),

@@ -6,7 +6,9 @@ import 'package:random_string/random_string.dart';
 
 class REG_Categoria extends StatefulWidget {
   final String alias;
-  const REG_Categoria({super.key,required this.alias});
+      final List<Color?> coloresRestaurante;
+
+  const REG_Categoria({super.key,required this.alias,required this.coloresRestaurante});
 
   @override
   State<REG_Categoria> createState() => _REG_CategoriaState();

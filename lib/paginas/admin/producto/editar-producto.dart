@@ -11,8 +11,9 @@ enum Habilitado { disponible, nodisponible }
 
 class Editarproducto extends StatefulWidget {
   final String userId;
+    final List<Color?> coloresRestaurante;
 
-  const Editarproducto({Key? key, required this.userId}) : super(key: key);
+  const Editarproducto({Key? key, required this.userId,required this.coloresRestaurante}) : super(key: key);
 
   @override
   _EditarproductoState createState() => _EditarproductoState();

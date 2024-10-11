@@ -6,7 +6,9 @@ import '../admin/mesa/mesa-service.dart';
 class ListaMesas extends StatefulWidget {
   final String alias;
   final String usuarioid;
-  const ListaMesas({required this.alias,required this.usuarioid, Key? key}) : super(key: key);
+      final List<Color?> coloresRestaurante;
+
+  const ListaMesas({required this.alias,required this.usuarioid, required this.coloresRestaurante,Key? key}) : super(key: key);
 
   @override
   _ListaMesasState createState() => _ListaMesasState();
@@ -87,7 +89,7 @@ class _ListaMesasState extends State<ListaMesas> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => OrdenMesaPantalla(mesa: mesa,alias:widget.alias,usuarioid:widget.usuarioid),
+                              builder: (context) => OrdenMesaPantalla(mesa: mesa,alias:widget.alias,usuarioid:widget.usuarioid,coloresRestaurante:widget.coloresRestaurante),
                             ),
                           );
                         },

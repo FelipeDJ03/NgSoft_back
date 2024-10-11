@@ -4,8 +4,9 @@ import 'mesa-service.dart';
 
 class Editarmesa extends StatefulWidget {
   final String userId;
+    final List<Color?> coloresRestaurante;
 
-  const Editarmesa({Key? key, required this.userId}) : super(key: key);
+  const Editarmesa({Key? key, required this.userId, required this.coloresRestaurante}) : super(key: key);
 
   @override
   _EditarmesaState createState() => _EditarmesaState();
@@ -54,7 +55,7 @@ class _EditarmesaState extends State<Editarmesa> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
             title: const Text(
               'Editar Mesa',

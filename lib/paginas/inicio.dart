@@ -27,7 +27,15 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
   String? alias;
   String? status;
   String? usuarioid;
-  
+
+
+  Color? color1 ;
+  Color? color2 ;
+  Color? color3 ;
+  Color? color4 ;
+  Color? color5;
+  List<Color?> coloresRestaurante = [];
+
   bool _isLoading = true;
 
   @override
@@ -59,6 +67,22 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
         _userRole = userDoc['rol'];
         _userName = userDoc['nombre'];
         _userImageUrl = userDoc['image_url'];
+
+         // Definimos los colores del restaurante
+       // Almacenamos los colores en las variables locales
+        color1 = _convertirHexAColor(restaurantDoc['color1']);
+        color2 = _convertirHexAColor(restaurantDoc['color2']);
+        color3 = _convertirHexAColor(restaurantDoc['color3']);
+        color4 = _convertirHexAColor(restaurantDoc['color4']);
+        color5 = _convertirHexAColor(restaurantDoc['color5']);
+
+        coloresRestaurante = [
+          color1,
+          color2,
+          color3,
+          color4,
+          color5,
+        ];
         _isLoading = false;
       });
     }
@@ -67,12 +91,26 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
  
   }
 
+  // Función para convertir de hex string a Color en Flutter
+Color _convertirHexAColor(String hexColor) {
+  // Elimina el símbolo '#' si está presente
+  hexColor = hexColor.replaceAll("#", "");
+
+  // Si el color tiene solo 6 caracteres (sin transparencia), añade 'FF' para la opacidad
+  if (hexColor.length == 6) {
+    hexColor = "FF$hexColor"; // Añade 'FF' al inicio para que sea 100% opaco
+  }
+
+  // Convierte el string en un valor entero y luego crea el objeto Color
+  return Color(int.parse("0x$hexColor"));
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 233, 233, 233), // Color de fondo
       appBar: AppBar(
-  backgroundColor: Color(0xFF556B2F),
+  backgroundColor: color1,
   title: Row(
     children: [
       _userImageUrl != null
@@ -122,7 +160,8 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
       Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ListaMesas(alias: alias!,usuarioid:usuarioid!),
+        builder: (context) => ListaMesas(alias: alias!,usuarioid:usuarioid!,coloresRestaurante: coloresRestaurante
+),
       ),
     );
       },
@@ -152,7 +191,7 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Color(0xFFD2691E),
+                color: color2,
               ),
               child: Row(
                 children: [
@@ -204,7 +243,7 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ListaUsuario(alias: alias!),
+                          builder: (context) => ListaUsuario(alias: alias!,coloresRestaurante: coloresRestaurante),
                         ),
                       );
                     },
@@ -228,7 +267,7 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ListaCategoria(alias: alias!),
+                          builder: (context) => ListaCategoria(alias: alias!,coloresRestaurante: coloresRestaurante),
                         ),
                       );
                     },
@@ -252,7 +291,7 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Listacocina(alias: alias!),
+                          builder: (context) => Listacocina(alias: alias!,coloresRestaurante: coloresRestaurante),
                         ),
                       );
                     },
@@ -276,7 +315,7 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ListaProducto(alias: alias!),
+                          builder: (context) => ListaProducto(alias: alias!,coloresRestaurante: coloresRestaurante),
                         ),
                       );
                     },
@@ -300,7 +339,7 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ListaMesa(alias: alias!),
+                          builder: (context) => ListaMesa(alias: alias!,coloresRestaurante: coloresRestaurante),
                         ),
                       );
                     },
@@ -324,7 +363,7 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ListaCombo(alias: alias!),
+                          builder: (context) => ListaCombo(alias: alias!,coloresRestaurante: coloresRestaurante),
                         ),
                       );
                     },
@@ -348,7 +387,7 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Configuracion(alias: alias!),
+                          builder: (context) => Configuracion(alias: alias!,coloresRestaurante:coloresRestaurante),
                         ),
                       );
                     },
@@ -374,11 +413,11 @@ class _INICIOPantallaState extends State<INICIOPantalla> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (_userRole == 'administrador')
-                    Expanded(child: ResumenVWidget(alias:alias!)),
+                    Expanded(child: ResumenVWidget(alias:alias!,coloresRestaurante: coloresRestaurante)),
                   if (_userRole == 'cocinero')
-                    Expanded(child: OrdenesCocinaPage(alias:alias!)),
+                    Expanded(child: OrdenesCocinaPage(alias:alias!,coloresRestaurante: coloresRestaurante)),
                   if (_userRole == 'mesero')
-                    Expanded(child: OrdenEntregar(alias:alias!)),
+                    Expanded(child: OrdenEntregar(alias:alias!,coloresRestaurante: coloresRestaurante)),
                 ],
               ),
           ),

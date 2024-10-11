@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 
 class ListaVentas extends StatefulWidget {
   final String alias;
-  const ListaVentas({super.key,required this.alias});
+      final List<Color?> coloresRestaurante;
+
+  const ListaVentas({super.key,required this.alias,required this.coloresRestaurante});
 
   @override
   _ListaVentasState createState() => _ListaVentasState();

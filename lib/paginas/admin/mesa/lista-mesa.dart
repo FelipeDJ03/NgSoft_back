@@ -7,7 +7,9 @@ import 'mesa-service.dart';
 
 class ListaMesa extends StatefulWidget {
   final String alias;
-  const ListaMesa({super.key,required this.alias});
+    final List<Color?> coloresRestaurante;
+
+  const ListaMesa({super.key, required this.alias,required this.coloresRestaurante});
 
   @override
   _ListaMesaState createState() => _ListaMesaState();
@@ -15,6 +17,8 @@ class ListaMesa extends StatefulWidget {
 
 class _ListaMesaState extends State<ListaMesa> {
   Stream<QuerySnapshot>? mesaStream;
+  TextEditingController searchController = TextEditingController();
+  String searchText = '';
 
   @override
   void initState() {
@@ -26,7 +30,7 @@ class _ListaMesaState extends State<ListaMesa> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Editarmesa(userId: userId),
+        builder: (context) => Editarmesa(userId: userId,coloresRestaurante:widget.coloresRestaurante),
       ),
     );
   }
@@ -41,33 +45,42 @@ class _ListaMesaState extends State<ListaMesa> {
       stream: mesaStream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return SplashPantalla(); 
+          return SplashPantalla();
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}')); 
+          return Center(child: Text('Error: ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return Center(child: Text('No hay mesas disponibles.'));
         } else {
           var mesas = snapshot.data!.docs;
+
+          // Apply search filter
+          var filteredMesas = mesas.where((mesa) {
+            String mesaNombre = mesa['nombre'].toString().toLowerCase();
+            return mesaNombre.contains(searchText.toLowerCase());
+          }).toList();
+
           return ListView.builder(
             padding: const EdgeInsets.all(10.0),
-            itemCount: (mesas.length / 2).ceil(),
+            itemCount: (filteredMesas.length / 2).ceil(),
             itemBuilder: (context, rowIndex) {
               int startIndex = rowIndex * 2;
               int endIndex = startIndex + 2;
 
-              if (endIndex > mesas.length) {
-                endIndex = mesas.length;
+              if (endIndex > filteredMesas.length) {
+                endIndex = filteredMesas.length;
               }
 
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: List.generate(2, (index) {
-                  if (startIndex + index >= mesas.length) {
-                    return Expanded(child: Container()); 
+                  if (startIndex + index >= filteredMesas.length) {
+                    return Expanded(child: Container());
                   }
-                  var mesa = mesas[startIndex + index];
+                  var mesa = filteredMesas[startIndex + index];
                   String disponibilidad = mesa['disponibilidad'];
-                  Color containerColor = disponibilidad == 'Disponible' ? Color(0xFFFFA500) : Color(0xFFD2691E);
+                  Color containerColor = disponibilidad == 'Disponible'
+                      ? Color(0xFFFFA500)
+                      : Color(0xFFD2691E);
 
                   return Expanded(
                     child: Container(
@@ -168,12 +181,12 @@ class _ListaMesaState extends State<ListaMesa> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-            context, 
-            MaterialPageRoute(builder: (context) => REG_Mesa(alias:widget.alias))
-          );
+            context,
+            MaterialPageRoute(builder: (context) => REG_Mesa(alias: widget.alias,coloresRestaurante:widget.coloresRestaurante)
+          ));
         },
         child: Icon(Icons.add, color: Colors.white),
-        backgroundColor: Color(0xFFD2691E),
+        backgroundColor: widget.coloresRestaurante[0],
       ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
@@ -184,20 +197,26 @@ class _ListaMesaState extends State<ListaMesa> {
                 color: Colors.black.withOpacity(0.3),
                 spreadRadius: 2,
                 blurRadius: 5,
-                offset: Offset(0, 3), 
+                offset: Offset(0, 3),
               ),
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
-            title: const Text(
-              'Mesas',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
+            title: TextField(
+              controller: searchController,
+              decoration: InputDecoration(
+                hintText: 'Buscar mesa...',
+                hintStyle: TextStyle(color: Colors.white),
+                border: InputBorder.none,
               ),
+              style: TextStyle(color: Colors.white, fontSize: 18.0),
+              onChanged: (value) {
+                setState(() {
+                  searchText = value;
+                });
+              },
             ),
             centerTitle: true,
             iconTheme: IconThemeData(

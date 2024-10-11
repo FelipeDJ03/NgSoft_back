@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 
 class ListaUsuario extends StatefulWidget {
   final String alias;
-  const ListaUsuario({super.key,required this.alias});
+      final List<Color?> coloresRestaurante;
+
+  const ListaUsuario({super.key,required this.alias,required this.coloresRestaurante});
 
   @override
   _ListaUsuarioState createState() => _ListaUsuarioState();
@@ -34,9 +36,9 @@ class _ListaUsuarioState extends State<ListaUsuario> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditarUsuario(userId: userId),
+        builder: (context) => EditarUsuario(userId: userId,coloresRestaurante:widget.coloresRestaurante,
       ),
-    );
+    ));
   }
 
   Widget TodoslosUsuarios() {
@@ -213,7 +215,7 @@ class _ListaUsuarioState extends State<ListaUsuario> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => REG_USUARIOPagina(alias:widget.alias)));
+              context, MaterialPageRoute(builder: (context) => REG_USUARIOPagina(alias:widget.alias,coloresRestaurante:widget.coloresRestaurante)));
         },
         child: Icon(Icons.add, color: Colors.white),
         backgroundColor: Color(0xFFFFA500),

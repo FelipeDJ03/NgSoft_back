@@ -3,8 +3,9 @@ import 'cocina-service.dart'; // Asegúrate de importar correctamente tu servici
 
 class Editarcocina extends StatefulWidget {
   final String userId;
+    final List<Color?> coloresRestaurante;
 
-  const Editarcocina({Key? key, required this.userId}) : super(key: key);
+  const Editarcocina({Key? key, required this.userId,required this.coloresRestaurante}) : super(key: key);
 
   @override
   _EditarcocinaState createState() => _EditarcocinaState();

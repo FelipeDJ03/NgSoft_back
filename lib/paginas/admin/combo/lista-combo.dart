@@ -10,7 +10,9 @@ import 'package:flutter/material.dart';
 
 class ListaCombo extends StatefulWidget {
   final String alias;
-  const ListaCombo({super.key, required this.alias});
+      final List<Color?> coloresRestaurante;
+
+  const ListaCombo({super.key, required this.alias,required this.coloresRestaurante});
 
   @override
   _ListaComboState createState() => _ListaComboState();
@@ -34,7 +36,7 @@ class _ListaComboState extends State<ListaCombo> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditarCombo(comboId: userId),
+        builder: (context) => EditarCombo(comboId: userId,coloresRestaurante:widget.coloresRestaurante),
       ),
     );
   }
@@ -167,7 +169,7 @@ class _ListaComboState extends State<ListaCombo> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => REG_Combo(alias:widget.alias)));
+              context, MaterialPageRoute(builder: (context) => REG_Combo(alias:widget.alias,coloresRestaurante:widget.coloresRestaurante)));
         },
         child: Icon(Icons.add, color: Colors.white),
         backgroundColor: Color(0xFFD2691E),

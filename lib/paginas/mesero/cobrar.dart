@@ -8,7 +8,9 @@ class CobrarPantalla extends StatefulWidget {
   final String mesaId;
   final String alias;
   final String usuarioid;
-  CobrarPantalla({required this.mesaId,required this.alias,required this.usuarioid});
+      final List<Color?> coloresRestaurante;
+
+  CobrarPantalla({required this.mesaId,required this.alias,required this.usuarioid,required this.coloresRestaurante});
 
   @override
   _CobrarPantallaState createState() => _CobrarPantallaState();

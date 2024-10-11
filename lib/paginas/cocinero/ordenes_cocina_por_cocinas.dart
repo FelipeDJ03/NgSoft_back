@@ -7,8 +7,9 @@ import 'cocina_service.dart';
 
 class OrdenesCocina_porCocinaPage extends StatefulWidget {
   final String alias;
+    final List<Color?> coloresRestaurante;
 
-  OrdenesCocina_porCocinaPage({required this.alias});
+  OrdenesCocina_porCocinaPage({required this.alias,required this.coloresRestaurante});
 
   @override
   _OrdenesCocina_porCocinaPageState createState() => _OrdenesCocina_porCocinaPageState();
@@ -32,7 +33,7 @@ class _OrdenesCocina_porCocinaPageState extends State<OrdenesCocina_porCocinaPag
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => OrdenesCocinaPage(alias:widget.alias),
+                          builder: (context) => OrdenesCocinaPage(alias:widget.alias,coloresRestaurante: widget.coloresRestaurante),
                         ),
                       );
                 },

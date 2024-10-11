@@ -8,8 +8,9 @@ import 'usuario-service.dart';
 
 class EditarUsuario extends StatefulWidget {
   final String userId;
- 
-  const EditarUsuario({super.key, required this.userId});
+     final List<Color?> coloresRestaurante;
+
+  const EditarUsuario({super.key, required this.userId,required this.coloresRestaurante});
 
   @override
   _EditarUsuarioState createState() => _EditarUsuarioState();

@@ -9,7 +9,9 @@ import 'categoria-service.dart';
 
 class ListaCategoria extends StatefulWidget {
   final String alias;
-  const ListaCategoria({super.key,required this.alias});
+      final List<Color?> coloresRestaurante;
+
+  const ListaCategoria({super.key,required this.alias,required this.coloresRestaurante});
     
  
 
@@ -36,7 +38,7 @@ class _ListaCategoriaState extends State<ListaCategoria> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Editarcategoria(userId: userId),
+        builder: (context) => Editarcategoria(userId: userId,coloresRestaurante:widget.coloresRestaurante),
       ),
     );
   }
@@ -154,7 +156,7 @@ class _ListaCategoriaState extends State<ListaCategoria> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => REG_Categoria(alias: widget.alias)));
+              context, MaterialPageRoute(builder: (context) => REG_Categoria(alias: widget.alias,coloresRestaurante:widget.coloresRestaurante)));
         },
         child: Icon(Icons.add, color: Colors.white),
         backgroundColor: Color(0xFFD2691E),

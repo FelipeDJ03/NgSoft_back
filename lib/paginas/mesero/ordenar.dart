@@ -5,7 +5,9 @@ import 'orden-service.dart'; // Importar el servicio
 class OrdenarPantalla extends StatefulWidget {
   final String mesaId;
   final String alias;
-  OrdenarPantalla({required this.mesaId,required this.alias});
+      final List<Color?> coloresRestaurante;
+
+  OrdenarPantalla({required this.mesaId,required this.alias,required this.coloresRestaurante});
 
   @override
   _OrdenarPantallaState createState() => _OrdenarPantallaState();

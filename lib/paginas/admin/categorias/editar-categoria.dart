@@ -3,8 +3,9 @@ import 'categoria-service.dart'; // Asegúrate de importar correctamente tu serv
 
 class Editarcategoria extends StatefulWidget {
   final String userId;
+    final List<Color?> coloresRestaurante;
 
-  const Editarcategoria({Key? key, required this.userId}) : super(key: key);
+  const Editarcategoria({Key? key, required this.userId,required this.coloresRestaurante}) : super(key: key);
 
   @override
   _EditarcategoriaState createState() => _EditarcategoriaState();

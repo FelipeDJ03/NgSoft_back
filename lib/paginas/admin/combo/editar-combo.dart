@@ -6,8 +6,9 @@ import 'combo-service.dart';
 
 class EditarCombo extends StatefulWidget {
   final String comboId;
+    final List<Color?> coloresRestaurante;
 
-  const EditarCombo({Key? key, required this.comboId}) : super(key: key);
+  const EditarCombo({Key? key, required this.comboId,required this.coloresRestaurante}) : super(key: key);
 
   @override
   _EditarComboState createState() => _EditarComboState();

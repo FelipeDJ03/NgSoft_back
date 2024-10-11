@@ -6,8 +6,9 @@ import 'package:ngcomanda/paginas/admin/ventas/ventas-service.dart';
 
 class ResumenVWidget extends StatelessWidget {
    final String alias;
+    final List<Color?> coloresRestaurante;
 
-  ResumenVWidget({required this.alias}); 
+  ResumenVWidget({required this.alias,required this.coloresRestaurante}); 
   @override
   Widget build(BuildContext context) {
     final ventasService = VentasService();
@@ -138,7 +139,7 @@ class ResumenVWidget extends StatelessWidget {
                    onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ListaVentas(alias:alias)),
+                    MaterialPageRoute(builder: (context) => ListaVentas(alias:alias,coloresRestaurante:coloresRestaurante)),
                   );
                 },
                   style: ElevatedButton.styleFrom(

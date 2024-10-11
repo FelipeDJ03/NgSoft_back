@@ -11,7 +11,9 @@ import 'combo-service.dart';
 
 class REG_Combo extends StatefulWidget {
   final String alias;
-  const REG_Combo({super.key,required this.alias});
+      final List<Color?> coloresRestaurante;
+
+  const REG_Combo({super.key,required this.alias,required this.coloresRestaurante});
 
   @override
   State<REG_Combo> createState() => _REG_ComboState();

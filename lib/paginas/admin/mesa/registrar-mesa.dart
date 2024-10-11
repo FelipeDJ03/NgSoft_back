@@ -7,7 +7,9 @@ enum Disponibilidad { disponible, ocupado }
 
 class REG_Mesa extends StatefulWidget {
   final String alias;
-  const REG_Mesa({Key? key, required this.alias}) : super(key: key);
+      final List<Color?> coloresRestaurante;
+
+  const REG_Mesa({Key? key, required this.alias, required this.coloresRestaurante}) : super(key: key);
 
   @override
   State<REG_Mesa> createState() => _REG_MesaState();
@@ -38,7 +40,7 @@ class _REG_MesaState extends State<REG_Mesa> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
             title: const Text(
               'Registrar Mesa',

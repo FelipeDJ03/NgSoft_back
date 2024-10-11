@@ -14,7 +14,9 @@ enum Habilitado { disponible, nodisponible }
 
 class REG_Producto extends StatefulWidget {
   final String alias;
-  const REG_Producto({super.key,required this.alias});
+      final List<Color?> coloresRestaurante;
+
+  const REG_Producto({super.key,required this.alias,required this.coloresRestaurante});
 
   @override
   State<REG_Producto> createState() => _REG_ProductoState();
