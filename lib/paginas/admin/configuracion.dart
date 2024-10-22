@@ -101,7 +101,7 @@ class _ConfiguracionState extends State<Configuracion> {
       }
     });
   }
-
+ 
  Future<void> guardarEnFirebase() async {
   try {
     // Guardar los colores en Firebase
@@ -238,3 +238,4 @@ class _ConfiguracionState extends State<Configuracion> {
     );
   }
 }
+ 

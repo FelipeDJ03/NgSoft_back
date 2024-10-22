@@ -57,17 +57,17 @@ class _EditarmesaState extends State<Editarmesa> {
           child: AppBar(
             backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Editar Mesa',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -82,21 +82,21 @@ class _EditarmesaState extends State<Editarmesa> {
               controller: nombreController,
               decoration: InputDecoration(
                 filled: true, 
-                fillColor: Color(0xFFffffff),
+                fillColor: widget.coloresRestaurante[3],
                 labelText: 'Nombre',
                 labelStyle: TextStyle(
-                  color: Colors.black, 
+                  color: widget.coloresRestaurante[4] 
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[2]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[2]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
@@ -108,21 +108,21 @@ class _EditarmesaState extends State<Editarmesa> {
               controller: descripcionController,
               decoration: InputDecoration(
                 filled: true, 
-                fillColor: Color(0xFFffffff),
+                fillColor: widget.coloresRestaurante[3],
                 labelText: 'Descripción',
                 labelStyle: TextStyle(
-                  color: Colors.black, 
+                  color: widget.coloresRestaurante[4], 
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[2]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[2]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
@@ -139,21 +139,21 @@ class _EditarmesaState extends State<Editarmesa> {
               },
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Color(0xFFffffff),
+                fillColor: widget.coloresRestaurante[3],
                 labelText: 'Disponibilidad',
                 labelStyle: TextStyle(
-                  color: Colors.black,
+                  color: widget.coloresRestaurante[4], 
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[2]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[2]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0),
@@ -175,21 +175,21 @@ class _EditarmesaState extends State<Editarmesa> {
               ],
               decoration: InputDecoration(
                 filled: true, 
-                fillColor: Color(0xFFffffff),
+                fillColor: widget.coloresRestaurante[3],
                 labelText: 'Comensales',
                 labelStyle: TextStyle(
-                  color: Colors.black, 
+                  color: widget.coloresRestaurante[4],
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[2]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[2]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
@@ -213,7 +213,7 @@ class _EditarmesaState extends State<Editarmesa> {
                       SnackBar(
                         content: Text(
                           'Datos actualizados correctamente',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: widget.coloresRestaurante[3]),
                         ),
                         backgroundColor: Colors.black.withOpacity(0.7),
                         behavior: SnackBarBehavior.floating,
@@ -232,7 +232,7 @@ class _EditarmesaState extends State<Editarmesa> {
                       SnackBar(
                         content: Text(
                           'Error al actualizar los datos',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: widget.coloresRestaurante[3]),
                         ),
                         backgroundColor: Colors.black.withOpacity(0.7),
                         behavior: SnackBarBehavior.floating,
@@ -258,7 +258,7 @@ class _EditarmesaState extends State<Editarmesa> {
                   "Actualizar",
                   style: TextStyle(
                     fontSize: 17, 
-                    color: Colors.white, 
+                    color: widget.coloresRestaurante[3], 
                     fontWeight: FontWeight.bold,
                   ),
                 ),

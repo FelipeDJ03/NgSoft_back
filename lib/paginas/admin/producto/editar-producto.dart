@@ -87,7 +87,7 @@ Future<void> obtenerDetalleproducto() async {
         SnackBar(
           content: Text(
             'Datos actualizados correctamente',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.coloresRestaurante[3]),
           ),
           backgroundColor: Colors.black.withOpacity(0.7),
           behavior: SnackBarBehavior.floating,
@@ -107,7 +107,7 @@ Future<void> obtenerDetalleproducto() async {
         SnackBar(
           content: Text(
             'Error al actualizar los datos',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.coloresRestaurante[3]),
           ),
           backgroundColor: Colors.black.withOpacity(0.7),
           behavior: SnackBarBehavior.floating,
@@ -140,19 +140,19 @@ Future<void> obtenerDetalleproducto() async {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Editar Producto',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -177,21 +177,21 @@ Future<void> obtenerDetalleproducto() async {
                 controller: nameController,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color(0xFFffffff),
+                  fillColor: widget.coloresRestaurante[3],
                   labelText: 'Nombre',
                   labelStyle: TextStyle(
-                    color: Colors.black,
+                    color: widget.coloresRestaurante[4],
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
@@ -203,21 +203,21 @@ Future<void> obtenerDetalleproducto() async {
                 controller: descripcionController,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color(0xFFffffff),
+                  fillColor: widget.coloresRestaurante[3],
                   labelText: 'Descripción',
                   labelStyle: TextStyle(
-                    color: Colors.black,
+                    color: widget.coloresRestaurante[4],
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
@@ -229,21 +229,21 @@ Future<void> obtenerDetalleproducto() async {
                 controller: precioController,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color(0xFFffffff),
+                  fillColor: widget.coloresRestaurante[3],
                   labelText: 'Precio',
                   labelStyle: TextStyle(
-                    color: Colors.black,
+                    color: widget.coloresRestaurante[4],
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
@@ -259,21 +259,21 @@ Future<void> obtenerDetalleproducto() async {
                 controller: minutosController,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color(0xFFffffff),
+                  fillColor: widget.coloresRestaurante[3],
                   labelText: 'Tiempo de preparación (minutos)',
                   labelStyle: TextStyle(
-                    color: Colors.black,
+                    color: widget.coloresRestaurante[4],
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
@@ -304,21 +304,21 @@ Future<void> obtenerDetalleproducto() async {
                       },
                       decoration: InputDecoration(
                         filled: true, 
-                        fillColor: Color(0xFFffffff),
+                        fillColor: widget.coloresRestaurante[3],
                         labelText: 'Disponibilidad en delivery',
                         labelStyle: TextStyle(
-                          color: Colors.black, 
+                          color: widget.coloresRestaurante[4], 
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0), 
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0), 
@@ -351,21 +351,21 @@ Future<void> obtenerDetalleproducto() async {
                       },
                       decoration: InputDecoration(
                         filled: true, 
-                        fillColor: Color(0xFFffffff),
+                        fillColor: widget.coloresRestaurante[3],
                         labelText: 'Disponibilidad en cocina',
                         labelStyle: TextStyle(
-                          color: Colors.black, 
+                          color: widget.coloresRestaurante[4], 
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0), 
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0), 
@@ -383,7 +383,7 @@ Future<void> obtenerDetalleproducto() async {
                 child: ElevatedButton(
                   onPressed: actualizarproducto,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFFA500),
+                    backgroundColor: widget.coloresRestaurante[1],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
@@ -394,7 +394,7 @@ Future<void> obtenerDetalleproducto() async {
                     'Actualizar',
                     style: TextStyle(
                       fontSize: 17,
-                      color: Colors.white,
+                      color: widget.coloresRestaurante[3],
                       fontWeight: FontWeight.bold,
                     ),
                   ),

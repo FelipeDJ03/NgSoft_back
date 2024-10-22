@@ -12,7 +12,7 @@ class EditarCombo extends StatefulWidget {
 
   @override
   _EditarComboState createState() => _EditarComboState();
-}
+} 
 
 class _EditarComboState extends State<EditarCombo> {
   final _formKey = GlobalKey<FormState>();
@@ -105,7 +105,7 @@ class _EditarComboState extends State<EditarCombo> {
         SnackBar(
           content: Text(
             'El combo se ha actualizado de forma exitosa',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.coloresRestaurante[3]),
           ),
           backgroundColor: Colors.black.withOpacity(0.7),
           behavior: SnackBarBehavior.floating,
@@ -125,7 +125,7 @@ class _EditarComboState extends State<EditarCombo> {
         SnackBar(
           content: Text(
             'Error al actualizar el combo',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.coloresRestaurante[3]),
           ),
           backgroundColor: Colors.black.withOpacity(0.7),
           behavior: SnackBarBehavior.floating,
@@ -162,19 +162,19 @@ class _EditarComboState extends State<EditarCombo> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Editar Combo',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -194,21 +194,21 @@ class _EditarComboState extends State<EditarCombo> {
                         controller: nombreController,
                         decoration: InputDecoration(
                           filled: true, 
-                          fillColor: Color(0xFFffffff),
+                          fillColor: widget.coloresRestaurante[3],
                           labelText: 'Nombre',
                           labelStyle: TextStyle(
-                            color: Colors.black, 
+                            color: widget.coloresRestaurante[4], 
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xFFD2691E),
+                              color: widget.coloresRestaurante[2]!,
                               width: 1.3,
                             ),
                             borderRadius: BorderRadius.circular(18.0), 
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xFFD2691E),
+                              color: widget.coloresRestaurante[2]!,
                               width: 1.3,
                             ),
                             borderRadius: BorderRadius.circular(18.0), 
@@ -226,21 +226,21 @@ class _EditarComboState extends State<EditarCombo> {
                         controller: descripcionController,
                         decoration: InputDecoration(
                           filled: true, 
-                          fillColor: Color(0xFFffffff),
+                          fillColor: widget.coloresRestaurante[3],
                           labelText: 'Descripción',
                           labelStyle: TextStyle(
-                            color: Colors.black, 
+                            color: widget.coloresRestaurante[4], 
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xFFD2691E),
+                              color: widget.coloresRestaurante[2]!,
                               width: 1.3,
                             ),
                             borderRadius: BorderRadius.circular(18.0), 
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xFFD2691E),
+                              color: widget.coloresRestaurante[2]!,
                               width: 1.3,
                             ),
                             borderRadius: BorderRadius.circular(18.0), 
@@ -258,21 +258,21 @@ class _EditarComboState extends State<EditarCombo> {
                         controller: precioController,
                         decoration: InputDecoration(
                           filled: true, 
-                          fillColor: Color(0xFFffffff),
+                          fillColor: widget.coloresRestaurante[3],
                           labelText: 'Precio',
                           labelStyle: TextStyle(
-                            color: Colors.black, 
+                            color: widget.coloresRestaurante[4], 
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xFFD2691E),
+                              color: widget.coloresRestaurante[2]!,
                               width: 1.3,
                             ),
                             borderRadius: BorderRadius.circular(18.0), 
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xFFD2691E),
+                              color: widget.coloresRestaurante[2]!,
                               width: 1.3,
                             ),
                             borderRadius: BorderRadius.circular(18.0), 
@@ -307,21 +307,21 @@ class _EditarComboState extends State<EditarCombo> {
                         },
                         decoration: InputDecoration(
                           filled: true, 
-                          fillColor: Color(0xFFffffff),
+                          fillColor: widget.coloresRestaurante[3],
                           labelText: 'Disponibilidad',
                           labelStyle: TextStyle(
-                            color: Colors.black, 
+                            color: widget.coloresRestaurante[4], 
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xFFD2691E),
+                              color: widget.coloresRestaurante[2]!,
                               width: 1.3,
                             ),
                             borderRadius: BorderRadius.circular(18.0), 
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xFFD2691E),
+                              color: widget.coloresRestaurante[2]!,
                               width: 1.3,
                             ),
                             borderRadius: BorderRadius.circular(18.0), 
@@ -339,7 +339,7 @@ class _EditarComboState extends State<EditarCombo> {
                         child: ElevatedButton(
                           onPressed: _submit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFFFA500),
+                            backgroundColor: widget.coloresRestaurante[1],
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
@@ -350,7 +350,7 @@ class _EditarComboState extends State<EditarCombo> {
                             'Actualizar',
                             style: TextStyle(
                               fontSize: 17, 
-                              color: Colors.white, 
+                              color: widget.coloresRestaurante[3], 
                               fontWeight: FontWeight.bold,
                             ), 
                           ),

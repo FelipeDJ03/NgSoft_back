@@ -49,7 +49,7 @@ class _REG_ProductoState extends State<REG_Producto> {
         SnackBar(
           content: Text(
             'No se ha agregado una imagen.',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.coloresRestaurante[3]),
           ),
           backgroundColor: Colors.black.withOpacity(0.7),
           behavior: SnackBarBehavior.floating,
@@ -106,7 +106,7 @@ class _REG_ProductoState extends State<REG_Producto> {
         SnackBar(
           content: Text(
             'El producto se ha registrado de forma exitosa',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.coloresRestaurante[3]),
           ),
           backgroundColor: Colors.black.withOpacity(0.7),
           behavior: SnackBarBehavior.floating,
@@ -138,7 +138,7 @@ class _REG_ProductoState extends State<REG_Producto> {
               width: double.infinity,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 borderRadius: BorderRadius.circular(18),
                 boxShadow: [
                   BoxShadow(
@@ -178,7 +178,7 @@ class _REG_ProductoState extends State<REG_Producto> {
                           Navigator.of(ctx).pop();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor: widget.coloresRestaurante[3],
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -214,7 +214,7 @@ class _REG_ProductoState extends State<REG_Producto> {
                 ),
                 child: Icon(
                   Icons.warning,
-                  color: Colors.white,
+                  color: widget.coloresRestaurante[3],
                   size: 50,
                 ),
               ),
@@ -247,19 +247,19 @@ class _REG_ProductoState extends State<REG_Producto> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Productos',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -288,21 +288,21 @@ class _REG_ProductoState extends State<REG_Producto> {
                       controller: nombreController,
                       decoration: InputDecoration(
                         filled: true, 
-                        fillColor: Color(0xFFffffff),
+                        fillColor: widget.coloresRestaurante[3],
                         labelText: 'Nombre',
                         labelStyle: TextStyle(
-                          color: Colors.black, 
+                          color: widget.coloresRestaurante[4],
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0), 
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0), 
@@ -320,21 +320,21 @@ class _REG_ProductoState extends State<REG_Producto> {
                       controller: descripcionController,
                       decoration: InputDecoration(
                         filled: true, 
-                        fillColor: Color(0xFFffffff),
+                        fillColor: widget.coloresRestaurante[3],
                         labelText: 'Descripción',
                         labelStyle: TextStyle(
-                          color: Colors.black, 
+                          color: widget.coloresRestaurante[4],
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0), 
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0), 
@@ -352,21 +352,21 @@ class _REG_ProductoState extends State<REG_Producto> {
                       controller: precioController,
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Color(0xFFffffff),
+                        fillColor: widget.coloresRestaurante[3],
                         labelText: 'Precio',
                         labelStyle: TextStyle(
-                          color: Colors.black,
+                          color: widget.coloresRestaurante[4],
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0),
@@ -394,21 +394,21 @@ class _REG_ProductoState extends State<REG_Producto> {
                       controller: minutosController, // Cambia este controlador para capturar los minutos
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Color(0xFFffffff),
+                        fillColor: widget.coloresRestaurante[3],
                         labelText: 'Tiempo de preparacion (minutos)', // Cambia el texto para indicar que es para minutos
                         labelStyle: TextStyle(
-                          color: Colors.black,
+                          color: widget.coloresRestaurante[4],
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0),
@@ -451,21 +451,21 @@ class _REG_ProductoState extends State<REG_Producto> {
                       },
                       decoration: InputDecoration(
                         filled: true, 
-                        fillColor: Color(0xFFffffff),
+                        fillColor: widget.coloresRestaurante[3],
                         labelText: 'Disponibilidad en delivery',
                         labelStyle: TextStyle(
-                          color: Colors.black, 
+                          color: widget.coloresRestaurante[4],
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0), 
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0), 
@@ -498,21 +498,21 @@ class _REG_ProductoState extends State<REG_Producto> {
                       },
                       decoration: InputDecoration(
                         filled: true, 
-                        fillColor: Color(0xFFffffff),
+                        fillColor: widget.coloresRestaurante[3],
                         labelText: 'Disponible en cocina',
                         labelStyle: TextStyle(
-                          color: Colors.black, 
+                          color: widget.coloresRestaurante[4],
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0), 
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFD2691E),
+                            color: widget.coloresRestaurante[2]!,
                             width: 1.3,
                           ),
                           borderRadius: BorderRadius.circular(18.0), 
@@ -553,21 +553,21 @@ class _REG_ProductoState extends State<REG_Producto> {
                             },
                             decoration: InputDecoration(
                               filled: true, 
-                              fillColor: Color(0xFFffffff),
+                              fillColor: widget.coloresRestaurante[3],
                               labelText: 'Categoría',
                               labelStyle: TextStyle(
-                                color: Colors.black, 
+                                color: widget.coloresRestaurante[4],
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0xFFD2691E),
+                                  color: widget.coloresRestaurante[2]!,
                                   width: 1.3,
                                 ),
                                 borderRadius: BorderRadius.circular(18.0), 
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0xFFD2691E),
+                                  color: widget.coloresRestaurante[2]!,
                                   width: 1.3,
                                 ),
                                 borderRadius: BorderRadius.circular(18.0), 
@@ -611,21 +611,21 @@ class _REG_ProductoState extends State<REG_Producto> {
                             },
                             decoration: InputDecoration(
                               filled: true, 
-                              fillColor: Color(0xFFffffff),
+                              fillColor: widget.coloresRestaurante[3],
                               labelText: 'Cocina',
                               labelStyle: TextStyle(
-                                color: Colors.black, 
+                                color: widget.coloresRestaurante[4],
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0xFFD2691E),
+                                  color: widget.coloresRestaurante[2]!,
                                   width: 1.3,
                                 ),
                                 borderRadius: BorderRadius.circular(18.0), 
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0xFFD2691E),
+                                  color: widget.coloresRestaurante[2]!,
                                   width: 1.3,
                                 ),
                                 borderRadius: BorderRadius.circular(18.0), 
@@ -647,7 +647,7 @@ class _REG_ProductoState extends State<REG_Producto> {
                       ElevatedButton(
                         onPressed: _submit,
                         style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFFFA500),
+                        backgroundColor: widget.coloresRestaurante[1],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -658,7 +658,7 @@ class _REG_ProductoState extends State<REG_Producto> {
                         'Registrar',
                         style: TextStyle(
                           fontSize: 17, 
-                          color: Colors.white, 
+                          color: widget.coloresRestaurante[3], 
                           fontWeight: FontWeight.bold,
                         ), 
                       ),

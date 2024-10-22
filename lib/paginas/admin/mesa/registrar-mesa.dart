@@ -42,17 +42,17 @@ class _REG_MesaState extends State<REG_Mesa> {
           child: AppBar(
             backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Registrar Mesa',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -69,21 +69,21 @@ class _REG_MesaState extends State<REG_Mesa> {
                 controller: nombreController,
                 decoration: InputDecoration(
                   filled: true, 
-                  fillColor: Color(0xFFffffff),
+                  fillColor: widget.coloresRestaurante[3],
                   labelText: 'Nombre',
                   labelStyle: TextStyle(
-                    color: Colors.black, 
+                    color: widget.coloresRestaurante[4],
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0), 
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0), 
@@ -101,21 +101,21 @@ class _REG_MesaState extends State<REG_Mesa> {
                 controller: descripcionController,
                 decoration: InputDecoration(
                   filled: true, 
-                  fillColor: Color(0xFFffffff),
+                  fillColor: widget.coloresRestaurante[3],
                   labelText: 'Descripción',
                   labelStyle: TextStyle(
-                    color: Colors.black, 
+                    color: widget.coloresRestaurante[4],
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0), 
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0), 
@@ -148,21 +148,21 @@ class _REG_MesaState extends State<REG_Mesa> {
                 },
                 decoration: InputDecoration(
                   filled: true, 
-                  fillColor: Color(0xFFffffff),
+                  fillColor: widget.coloresRestaurante[3],
                   labelText: 'Disponibilidad',
                   labelStyle: TextStyle(
-                    color: Colors.black, 
+                    color: widget.coloresRestaurante[4],
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0), 
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0), 
@@ -184,21 +184,21 @@ class _REG_MesaState extends State<REG_Mesa> {
                 ],
                 decoration: InputDecoration(
                   filled: true, 
-                  fillColor: Color(0xFFffffff),
+                  fillColor: widget.coloresRestaurante[3],
                   labelText: 'Comensales',
                   labelStyle: TextStyle(
-                    color: Colors.black, 
+                    color: widget.coloresRestaurante[4],
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0), 
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0), 
@@ -235,7 +235,7 @@ class _REG_MesaState extends State<REG_Mesa> {
                           SnackBar(
                             content: Text(
                               'La Mesa se ha registrado de forma exitosa',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: widget.coloresRestaurante[3]),
                             ),
                             backgroundColor: Colors.black.withOpacity(0.7),
                             behavior: SnackBarBehavior.floating,
@@ -253,7 +253,7 @@ class _REG_MesaState extends State<REG_Mesa> {
                           SnackBar(
                             content: Text(
                               'Error al registrar la mesa',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: widget.coloresRestaurante[3]),
                             ),
                             backgroundColor: Colors.black.withOpacity(0.7),
                             behavior: SnackBarBehavior.floating,
@@ -269,7 +269,7 @@ class _REG_MesaState extends State<REG_Mesa> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFFA500), 
+                    backgroundColor: widget.coloresRestaurante[1], 
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25), 
                     ),
@@ -280,7 +280,7 @@ class _REG_MesaState extends State<REG_Mesa> {
                     "Agregar",
                     style: TextStyle(
                       fontSize: 17, 
-                      color: Colors.white, 
+                      color: widget.coloresRestaurante[3], 
                       fontWeight: FontWeight.bold,
                     ),
                   ),

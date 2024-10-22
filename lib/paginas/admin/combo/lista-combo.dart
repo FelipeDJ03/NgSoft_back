@@ -66,7 +66,7 @@ class _ListaComboState extends State<ListaCombo> {
                   padding: const EdgeInsets.all(18),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Color(0xFFFFA500),
+                    color: widget.coloresRestaurante[1],
                     borderRadius: BorderRadius.circular(5),
                   ),
                   
@@ -78,7 +78,7 @@ class _ListaComboState extends State<ListaCombo> {
                           ds['imagen_url'] ,
                           height: 120.0,
                           fit: BoxFit.cover, 
-                          errorBuilder: (context, error, stackTrace) => Icon(Icons.food_bank, size: 100, color: Colors.white,), 
+                          errorBuilder: (context, error, stackTrace) => Icon(Icons.food_bank, size: 100, color: widget.coloresRestaurante[3],), 
                         ),
                       ),
                       SizedBox(width: 10.0), 
@@ -90,7 +90,7 @@ class _ListaComboState extends State<ListaCombo> {
                             Text(
                               "${ds['nombre']}",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: widget.coloresRestaurante[3],
                                 fontSize: 20.0,
                               ),
                             ),
@@ -98,7 +98,7 @@ class _ListaComboState extends State<ListaCombo> {
                             Text(
                               "${ds['descripcion']}",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: widget.coloresRestaurante[3],
                                 fontSize: 14.0,
                               ),
                             ),
@@ -112,37 +112,21 @@ class _ListaComboState extends State<ListaCombo> {
                                   },
                                   child: Icon(
                                     Icons.edit,
-                                    color: Colors.white,
+                                    color: widget.coloresRestaurante[3],
                                     size: 20,
                                   ),
                                 ),
                                 SizedBox(width: 5.0),
-                                GestureDetector(
-                                  onTap: () async {
-                                    await DatabaseMethods().Eliminarcombo(ds.id);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Se ha eliminado un combo',
-                                            style: TextStyle(color: Colors.white),
-                                          ),
-                                          backgroundColor: Colors.black.withOpacity(0.7),
-                                          behavior: SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18),
-                                          ),
-                                          margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                          duration: Duration(milliseconds: 800),
-                                        ),
-                                      );
-                                  },
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: Colors.white,
-                                    size: 20,
+                               GestureDetector(
+                                    onTap: () {
+                                      ModalEliminar(ds.id);
+                                    },
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
                                   ),
-                                ),
                               ],
                             ),
                           ],
@@ -171,8 +155,8 @@ class _ListaComboState extends State<ListaCombo> {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => REG_Combo(alias:widget.alias,coloresRestaurante:widget.coloresRestaurante)));
         },
-        child: Icon(Icons.add, color: Colors.white),
-        backgroundColor: Color(0xFFD2691E),
+        child: Icon(Icons.add, color: widget.coloresRestaurante[3]),
+        backgroundColor: widget.coloresRestaurante[2],
       ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
@@ -188,19 +172,19 @@ class _ListaComboState extends State<ListaCombo> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Combos',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -215,4 +199,137 @@ class _ListaComboState extends State<ListaCombo> {
       ),
     );
   }
+
+
+void ModalEliminar(String comboID) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+          backgroundColor: Colors.transparent,
+          contentPadding: EdgeInsets.zero,
+          content: Container(
+            width: 300,
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 20),
+                Icon(
+                  Icons.check_circle_outline,
+                  color: widget.coloresRestaurante[1],
+                  size: 80,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Confirmar Acción',
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '¿Estás seguro de eliminar este combo?',
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 18,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          await DatabaseMethods().Eliminarcombo(comboID);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Se ha eliminado un combo',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              backgroundColor: Colors.black.withOpacity(0.7),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 20),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 10),
+                              duration: Duration(milliseconds: 800),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.green,
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 5,
+                        ),
+                        child: Text(
+                          'Sí',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.red,
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 5,
+                        ),
+                        child: Text(
+                          'No',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
+

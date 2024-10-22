@@ -49,7 +49,7 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
       SnackBar(
         content: Text(
           'Se agregó un nuevo usuario',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: widget.coloresRestaurante[3]),
         ),
         backgroundColor: Colors.black.withOpacity(0.7),
         behavior: SnackBarBehavior.floating,
@@ -98,7 +98,7 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
         GestureDetector(
           onTap: () => _seleccionarUsuario(index),
           child: Card(
-            color: _usuarioSeleccionado == index ? Color(0xFFD2691E) : Color(0xFFFFFDD0),
+            color: _usuarioSeleccionado == index ? widget.coloresRestaurante[2] : Color(0xFFFFFDD0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
             ),
@@ -109,12 +109,12 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
                   Icon(
                     Icons.person,
                     size: 50,
-                    color: _usuarioSeleccionado == index ? Colors.white : Colors.black,
+                    color: _usuarioSeleccionado == index ? widget.coloresRestaurante[3] : widget.coloresRestaurante[4],
                   ),
                   Text(
                     'Usuario ${index + 1}',
                     style: TextStyle(
-                      color: _usuarioSeleccionado == index ? Colors.white : Colors.black,
+                      color: _usuarioSeleccionado == index ? widget.coloresRestaurante[3] : widget.coloresRestaurante[4],
                     ),
                   ),
                 ],
@@ -127,14 +127,14 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
           right: 0,
           child: 
           IconButton(
-            icon: Icon(Icons.close, color: Color(0xFFD2691E), size: 22),
+            icon: Icon(Icons.close, color: widget.coloresRestaurante[2], size: 22),
             onPressed: () {
               _eliminarUsuario(index);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
                     'Se eliminó un usuario',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: widget.coloresRestaurante[3]),
                   ),
                   backgroundColor: Colors.black.withOpacity(0.7),
                   behavior: SnackBarBehavior.floating,
@@ -159,19 +159,19 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF556B2F),
+        backgroundColor: widget.coloresRestaurante[0],
         elevation: 0,
         title: Text(
           'Mesa: ${widget.mesa['nombre']}',
           style: TextStyle(
-            color: Colors.white,
+            color: widget.coloresRestaurante[3],
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
         iconTheme: IconThemeData(
-          color: Colors.white,
+          color: widget.coloresRestaurante[3],
         ),
         leading: _usuarioSeleccionado == -1
             ? null
@@ -228,7 +228,7 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
                           ElevatedButton(
                             onPressed: _cobrar,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFFFA500),
+                              backgroundColor: widget.coloresRestaurante[1],
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25),
                               ),
@@ -239,7 +239,7 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
                               'Cobrar',
                               style: TextStyle(
                                 fontSize: 15,
-                                color: Colors.white,
+                                color: widget.coloresRestaurante[3],
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -248,7 +248,7 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
                           ElevatedButton(
                             onPressed: _ordenar,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFFFA500),
+                              backgroundColor: widget.coloresRestaurante[1],
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25),
                               ),
@@ -259,7 +259,7 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
                               'Ver para ordenar',
                               style: TextStyle(
                                 fontSize: 15,
-                                color: Colors.white,
+                                color: widget.coloresRestaurante[3],
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -271,7 +271,7 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
                         child: ElevatedButton(
                           onPressed: _ordenar,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFFFA500),
+                            backgroundColor: widget.coloresRestaurante[1],
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
@@ -282,7 +282,7 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
                             'Ver para ordenar',
                             style: TextStyle(
                               fontSize: 15,
-                              color: Colors.white,
+                              color: widget.coloresRestaurante[3],
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -298,7 +298,7 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
                   return SeleccionarPlatillosPantalla(
                     mesaId: widget.mesa.id,
                     numeroComensal: index + 1,
-                    alias:widget.alias,
+                    alias:widget.alias, coloresRestaurante: [],
                   );
                 },
               ),
@@ -306,8 +306,8 @@ class _OrdenMesaPantallaState extends State<OrdenMesaPantalla> {
       floatingActionButton: _usuarioSeleccionado == -1 
           ? FloatingActionButton(
               onPressed: _agregarUsuario,
-              child: Icon(Icons.add, color: Colors.white),
-              backgroundColor: Color(0xFFD2691E),
+              child: Icon(Icons.add, color: widget.coloresRestaurante[3]),
+              backgroundColor: widget.coloresRestaurante[2],
             )
           : null, 
     );

@@ -29,10 +29,10 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 247, 246, 244), // Color de fondo
       appBar: AppBar(
-        title: Text('Ordenar - Mesa ${widget.mesaId}', style: TextStyle(color: Colors.white)),
-        backgroundColor: Color(0xFF556B2F),
+        title: Text('Ordenar - Mesa ${widget.mesaId}', style: TextStyle(color: widget.coloresRestaurante[3])),
+        backgroundColor: widget.coloresRestaurante[0],
         iconTheme: IconThemeData(
-          color: Colors.white,
+          color: widget.coloresRestaurante[3],
         ),
       ),
       body: Padding(
@@ -78,7 +78,8 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                         'nota': doc['nota'],
                         'imagen_url': doc['imagen_url'],
                         'alias':widget.alias,
-                        'cocina':doc['cocina']
+                        'cocina':doc['cocina'],
+                        'categoria':doc['categoria']
                       };
                     }).toList();
 
@@ -111,7 +112,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                                     padding: const EdgeInsets.only(bottom: 5.0, left: 18, right: 18, top: 5.0),
                                     width: MediaQuery.of(context).size.width,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFFFA500),
+                                      color: widget.coloresRestaurante[1],
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Row(
@@ -124,7 +125,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                                               Text(
                                                 "${productoCarrito['nombre']}",
                                                 style: TextStyle(
-                                                  color: Colors.white,
+                                                  color: widget.coloresRestaurante[3],
                                                   fontSize: 20.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -133,7 +134,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                                               Text(
                                                 "Cantidad: ${productoCarrito['cantidad']}",
                                                 style: TextStyle(
-                                                  color: Colors.white,
+                                                  color: widget.coloresRestaurante[3],
                                                   fontSize: 16.0,
                                                 ),
                                               ),
@@ -141,7 +142,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                                               Text(
                                                 "Nota: ${productoCarrito['nota']}",
                                                 style: TextStyle(
-                                                  color: Colors.white,
+                                                  color: widget.coloresRestaurante[3],
                                                   fontSize: 15.0,
                                                 ),
                                               ),
@@ -149,7 +150,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                                               Text(
                                                 "\$${productoCarrito['precio']}",
                                                 style: TextStyle(
-                                                  color: Colors.white,
+                                                  color: widget.coloresRestaurante[3],
                                                   fontSize: 18.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -170,7 +171,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                                                 errorBuilder: (context, error, stackTrace) => Icon(
                                                   Icons.food_bank,
                                                   size: 90,
-                                                  color: Colors.white,
+                                                  color: widget.coloresRestaurante[3],
                                                 ),
                                               ),
                                               Row(
@@ -189,7 +190,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                                                         _calcularTotal();
                                                       });
                                                     },
-                                                    child: Icon(Icons.delete, color: Colors.white),
+                                                    child: Icon(Icons.delete, color: widget.coloresRestaurante[3]),
                                                   ),
                                                 ],
                                               ),
@@ -230,7 +231,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                     SnackBar(
                       content: Text(
                         'Orden enviada a la cocina',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: widget.coloresRestaurante[3]),
                       ),
                       backgroundColor: Colors.black.withOpacity(0.7),
                       behavior: SnackBarBehavior.floating,
@@ -248,7 +249,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                     SnackBar(
                       content: Text(
                         'Error al enviar la orden: $e',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: widget.coloresRestaurante[3]),
                       ),
                       backgroundColor: Colors.red.withOpacity(0.7),
                       behavior: SnackBarBehavior.floating,
@@ -263,7 +264,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFD2691E),
+                backgroundColor: widget.coloresRestaurante[2],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
@@ -274,7 +275,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                 'Enviar a la cocina',
                 style: TextStyle(
                   fontSize: 17,
-                  color: Colors.white,
+                  color: widget.coloresRestaurante[3],
                   fontWeight: FontWeight.bold,
                 ),
               ),

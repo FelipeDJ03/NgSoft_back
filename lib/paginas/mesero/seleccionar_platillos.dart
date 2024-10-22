@@ -8,7 +8,7 @@ class SeleccionarPlatillosPantalla extends StatefulWidget {
   final String alias;
   final int numeroComensal;
 
-  SeleccionarPlatillosPantalla({required this.mesaId, required this.numeroComensal,required this.alias});
+  SeleccionarPlatillosPantalla({required this.mesaId, required this.numeroComensal,required this.alias, required List coloresRestaurante});
 
   @override
   _SeleccionarPlatillosPantallaState createState() => _SeleccionarPlatillosPantallaState();
@@ -212,7 +212,8 @@ class _SeleccionarPlatillosPantallaState extends State<SeleccionarPlatillosPanta
                                                 mesaId: widget.mesaId,
                                                 numeroComensal: widget.numeroComensal,
                                                 alias:widget.alias,
-                                                cocina:producto['cocina']
+                                                cocina:producto['cocina'],
+                                                categoria:producto['categoria']
                                               );
                                             },
                                           ),

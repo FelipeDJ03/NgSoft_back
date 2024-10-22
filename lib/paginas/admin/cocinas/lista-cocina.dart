@@ -70,7 +70,7 @@ class _ListacocinaState extends State<Listacocina> {
                     padding: const EdgeInsets.all(18),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Color(0xFFFFA500),
+                      color: widget.coloresRestaurante[1],
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Row(
@@ -93,7 +93,7 @@ class _ListacocinaState extends State<Listacocina> {
                               Text(
                                 "${ds['nombre']}",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: widget.coloresRestaurante[3],
                                   fontSize: 20.0,
                                 ),
                               ),
@@ -101,7 +101,7 @@ class _ListacocinaState extends State<Listacocina> {
                               Text(
                                 "${ds['descripcion']}",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: widget.coloresRestaurante[3],
                                   fontSize: 14.0,
                                 ),
                               ),
@@ -115,7 +115,7 @@ class _ListacocinaState extends State<Listacocina> {
                                     },
                                     child: Icon(
                                       Icons.edit,
-                                      color: Colors.white,
+                                      color: widget.coloresRestaurante[3],
                                       size: 20,
                                     ),
                                   ),
@@ -126,7 +126,7 @@ class _ListacocinaState extends State<Listacocina> {
                                     },
                                     child: Icon(
                                       Icons.delete,
-                                      color: Colors.white,
+                                      color: widget.coloresRestaurante[3],
                                       size: 20,
                                     ),
                                   ),
@@ -158,8 +158,8 @@ class _ListacocinaState extends State<Listacocina> {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => REG_cocina(alias: widget.alias,coloresRestaurante:widget.coloresRestaurante)));
         },
-        child: Icon(Icons.add, color: Colors.white),
-        backgroundColor: Color(0xFFD2691E),
+        child: Icon(Icons.add, color: widget.coloresRestaurante[3]),
+        backgroundColor: widget.coloresRestaurante[2],
       ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
@@ -175,19 +175,19 @@ class _ListacocinaState extends State<Listacocina> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Cocinas',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -220,7 +220,7 @@ class _ListacocinaState extends State<Listacocina> {
             width: 300,
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
               borderRadius: BorderRadius.circular(18),
               boxShadow: [
                 BoxShadow(
@@ -236,7 +236,7 @@ class _ListacocinaState extends State<Listacocina> {
                 SizedBox(height: 20),
                 Icon(
                   Icons.check_circle_outline,
-                  color: Color(0xFFFFA500),
+                  color: widget.coloresRestaurante[1],
                   size: 80,
                 ),
                 SizedBox(height: 20),
@@ -250,7 +250,7 @@ class _ListacocinaState extends State<Listacocina> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  '¿Estás seguro que quieres eliminar la categoría? Se eliminarán todos los productos y combos con esta categoría.',
+                  '¿Estás seguro que quieres eliminar esta Cocina? ',
                   style: TextStyle(
                     color: Colors.black87,
                     fontSize: 18,
@@ -270,7 +270,7 @@ class _ListacocinaState extends State<Listacocina> {
                             SnackBar(
                               content: Text(
                                 'Se ha eliminado una categoría',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: widget.coloresRestaurante[3]),
                               ),
                               backgroundColor: Colors.black.withOpacity(0.7),
                               behavior: SnackBarBehavior.floating,
@@ -286,7 +286,7 @@ class _ListacocinaState extends State<Listacocina> {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
+                          foregroundColor: widget.coloresRestaurante[3],
                           backgroundColor: Colors.green,
                           padding: EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
@@ -310,7 +310,7 @@ class _ListacocinaState extends State<Listacocina> {
                           Navigator.of(context).pop();
                         },
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
+                          foregroundColor: widget.coloresRestaurante[3],
                           backgroundColor: Colors.red,
                           padding: EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(

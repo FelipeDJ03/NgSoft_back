@@ -24,7 +24,7 @@ class _ListaProductoState extends State<ListaProducto> {
 
   @override
   void initState() {
-    super.initState();
+    super.initState(); 
     getontheload();
   }
 
@@ -88,7 +88,7 @@ class _ListaProductoState extends State<ListaProducto> {
                   child: Container(
                     padding: const EdgeInsets.all(18),
                     decoration: BoxDecoration(
-                      color: Color(0xFFFFA500),
+                      color: widget.coloresRestaurante[1],
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Row(
@@ -102,7 +102,7 @@ class _ListaProductoState extends State<ListaProducto> {
                             errorBuilder: (context, error, stackTrace) => Icon(
                               Icons.food_bank,
                               size: 100,
-                              color: Colors.white,
+                              color: widget.coloresRestaurante[3],
                             ),
                           ),
                         ),
@@ -116,7 +116,7 @@ class _ListaProductoState extends State<ListaProducto> {
                                 "${ds['nombre']}",
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: widget.coloresRestaurante[3],
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -126,7 +126,7 @@ class _ListaProductoState extends State<ListaProducto> {
                                 "${ds['descripcion']}",
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: widget.coloresRestaurante[3],
                                   fontSize: 14.0,
                                 ),
                               ),
@@ -135,7 +135,7 @@ class _ListaProductoState extends State<ListaProducto> {
                                 "${ds['disponibilidad']}",
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: widget.coloresRestaurante[3],
                                   fontSize: 14.0,
                                 ),
                               ),
@@ -143,7 +143,7 @@ class _ListaProductoState extends State<ListaProducto> {
                               Text(
                                 "\$${ds['precio']}",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: widget.coloresRestaurante[3],
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -156,32 +156,18 @@ class _ListaProductoState extends State<ListaProducto> {
                                     onTap: () {
                                       editarDetallesUsuario(ds.id);
                                     },
-                                    child: Icon(Icons.edit, color: Colors.white),
+                                    child: Icon(Icons.edit, color: widget.coloresRestaurante[3],),
                                   ),
                                   SizedBox(height: 5.0),
                                   GestureDetector(
-                                    onTap: () async {
-                                      await DatabaseMethods().Eliminarproducto(ds.id);
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Se ha eliminado un producto',
-                                            style: TextStyle(color: Colors.white),
-                                          ),
-                                          backgroundColor: Colors.black.withOpacity(0.7),
-                                          behavior: SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18),
-                                          ),
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: 30, vertical: 20),
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 12, vertical: 10),
-                                          duration: Duration(milliseconds: 800),
-                                        ),
-                                      );
+                                    onTap: () {
+                                      ModalEliminar(ds.id);
                                     },
-                                    child: Icon(Icons.delete, color: Colors.white),
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -211,15 +197,18 @@ class _ListaProductoState extends State<ListaProducto> {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => REG_Producto(alias: widget.alias,coloresRestaurante:widget.coloresRestaurante)));
         },
-        child: Icon(Icons.add, color: Colors.white),
-        backgroundColor: Color(0xFFD2691E),
+        child: Icon(Icons.add, color: widget.coloresRestaurante[3],),
+        backgroundColor: widget.coloresRestaurante[2],
       ),
       appBar: AppBar(
-        backgroundColor: Color(0xFF556B2F),
-        title: const Text(
+        backgroundColor: widget.coloresRestaurante[0],
+        iconTheme: IconThemeData(
+    color: Colors.white, // Color blanco para el ícono de menú y flecha de regreso
+  ),
+        title: Text(
           'Productos',
           style: TextStyle(
-            color: Colors.white,
+            color: widget.coloresRestaurante[3],
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
           ),
@@ -232,23 +221,173 @@ class _ListaProductoState extends State<ListaProducto> {
           children: [
             // Buscador de productos
             TextField(
-              controller: searchController,
-              onChanged: (value) {
-                filtrarProductos(value); // Filtrar en tiempo real
-              },
-              decoration: InputDecoration(
-                labelText: 'Buscar Producto',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
+            controller: searchController,
+            onChanged: (value) {
+              filtrarProductos(value);
+            },
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: widget.coloresRestaurante[3],
+              labelText: 'Buscar Producto',
+              labelStyle: TextStyle(
+                color: widget.coloresRestaurante[4],
+                fontSize: 14,
               ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: widget.coloresRestaurante[2]!,
+                  width: 1.3,
+                ),
+                borderRadius: BorderRadius.circular(18.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: widget.coloresRestaurante[2]!,
+                  width: 1.3,
+                ),
+                borderRadius: BorderRadius.circular(18.0),
+              ),
+              contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              prefixIcon: Icon(Icons.search, color: widget.coloresRestaurante[4]),
             ),
+          ),
             SizedBox(height: 10),
             Expanded(child: TodoslosProductos()),
           ],
         ),
       ),
+    );
+  }
+
+
+void ModalEliminar(String productoID) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+          backgroundColor: Colors.transparent,
+          contentPadding: EdgeInsets.zero,
+          content: Container(
+            width: 300,
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 20),
+                Icon(
+                  Icons.check_circle_outline,
+                  color: widget.coloresRestaurante[1],
+                  size: 80,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Confirmar Acción',
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '¿Estás seguro de eliminar este producto?',
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 18,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          await DatabaseMethods().Eliminarproducto(productoID);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Se ha eliminado un producto',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              backgroundColor: Colors.black.withOpacity(0.7),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 20),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 10),
+                              duration: Duration(milliseconds: 800),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.green,
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 5,
+                        ),
+                        child: Text(
+                          'Sí',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.red,
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 5,
+                        ),
+                        child: Text(
+                          'No',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

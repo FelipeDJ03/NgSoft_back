@@ -41,7 +41,7 @@ class _REG_ComboState extends State<REG_Combo> {
           SnackBar(
             content: Text(
               'No se ha agregado una imagen.',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: widget.coloresRestaurante[3]),
             ),
             backgroundColor: Colors.black.withOpacity(0.7),
             behavior: SnackBarBehavior.floating,
@@ -96,7 +96,7 @@ class _REG_ComboState extends State<REG_Combo> {
         SnackBar(
           content: Text(
             'El Combo se ha registrado de forma exitosa',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.coloresRestaurante[3]),
           ),
           backgroundColor: Colors.black.withOpacity(0.7),
           behavior: SnackBarBehavior.floating,
@@ -128,7 +128,7 @@ class _REG_ComboState extends State<REG_Combo> {
               width: double.infinity,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 borderRadius: BorderRadius.circular(18),
                 boxShadow: [
                   BoxShadow(
@@ -168,7 +168,7 @@ class _REG_ComboState extends State<REG_Combo> {
                           Navigator.of(ctx).pop();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor: widget.coloresRestaurante[3],
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -204,7 +204,7 @@ class _REG_ComboState extends State<REG_Combo> {
                 ),
                 child: Icon(
                   Icons.warning,
-                  color: Colors.white,
+                  color: widget.coloresRestaurante[3],
                   size: 50,
                 ),
               ),
@@ -258,7 +258,7 @@ class _REG_ComboState extends State<REG_Combo> {
                                 child: ChoiceChip(
                                   label: Text(
                                     doc['nombre'],
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: widget.coloresRestaurante[3]),
                                   ),
                                   selected: _filtroCategoria == doc.id,
                                   onSelected: (bool selected) {
@@ -266,8 +266,8 @@ class _REG_ComboState extends State<REG_Combo> {
                                       _filtroCategoria = selected ? doc.id : null;
                                     });
                                   },
-                                  backgroundColor: Color(0xFFD2691E),
-                                  selectedColor: Color(0xFFFFA500),
+                                  backgroundColor: widget.coloresRestaurante[2],
+                                  selectedColor: widget.coloresRestaurante[1],
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),
                                     side: BorderSide(color: Colors.transparent),
@@ -316,7 +316,7 @@ class _REG_ComboState extends State<REG_Combo> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('${productos.length} resultados encontrados', style: TextStyle(color: Colors.black)),
+                            child: Text('${productos.length} resultados encontrados', style: TextStyle(color: widget.coloresRestaurante[4])),
                           ),
                           Expanded(
                             child: ListView.builder(
@@ -331,7 +331,7 @@ class _REG_ComboState extends State<REG_Combo> {
                                     child: Container(
                                       padding: const EdgeInsets.all(18),
                                       decoration: BoxDecoration(
-                                        color: Color(0xFFFFA500),
+                                        color: widget.coloresRestaurante[1],
                                         borderRadius: BorderRadius.circular(5),
                                       ),
                                       child: ListTile(
@@ -342,10 +342,10 @@ class _REG_ComboState extends State<REG_Combo> {
                                           errorBuilder: (context, error, stackTrace) => Icon(
                                             Icons.food_bank,
                                             size: 50,
-                                            color: Colors.white,
+                                            color: widget.coloresRestaurante[3],
                                           ),
                                         ),
-                                        title: Text(producto['nombre'], style: TextStyle(color: Colors.white)),
+                                        title: Text(producto['nombre'], style: TextStyle(color: widget.coloresRestaurante[3])),
                                         onTap: () {
                                           setState(() {
                                             _productosSeleccionados.add({
@@ -398,17 +398,17 @@ class _REG_ComboState extends State<REG_Combo> {
           child: AppBar(
             backgroundColor: Color(0xFF556B2F),
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Agregar Combo',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -438,21 +438,21 @@ class _REG_ComboState extends State<REG_Combo> {
                     controller: nombreController,
                     decoration: InputDecoration(
                       filled: true, 
-                      fillColor: Color(0xFFffffff),
+                      fillColor: widget.coloresRestaurante[3],
                       labelText: 'Nombre',
                       labelStyle: TextStyle(
-                        color: Colors.black, 
+                        color: widget.coloresRestaurante[4], 
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xFFD2691E),
+                          color: widget.coloresRestaurante[2]!,
                           width: 1.3,
                         ),
                         borderRadius: BorderRadius.circular(18.0), 
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xFFD2691E),
+                          color: widget.coloresRestaurante[2]!,
                           width: 1.3,
                         ),
                         borderRadius: BorderRadius.circular(18.0), 
@@ -470,21 +470,21 @@ class _REG_ComboState extends State<REG_Combo> {
                     controller: descripcionController,
                     decoration: InputDecoration(
                       filled: true, 
-                      fillColor: Color(0xFFffffff),
+                      fillColor: widget.coloresRestaurante[3],
                       labelText: 'Descripción',
                       labelStyle: TextStyle(
-                        color: Colors.black, 
+                        color: widget.coloresRestaurante[4], 
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xFFD2691E),
+                          color: widget.coloresRestaurante[2]!,
                           width: 1.3,
                         ),
                         borderRadius: BorderRadius.circular(18.0), 
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xFFD2691E),
+                          color: widget.coloresRestaurante[2]!,
                           width: 1.3,
                         ),
                         borderRadius: BorderRadius.circular(18.0), 
@@ -502,21 +502,21 @@ class _REG_ComboState extends State<REG_Combo> {
                     controller: precioController,
                     decoration: InputDecoration(
                       filled: true, 
-                      fillColor: Color(0xFFffffff),
+                      fillColor: widget.coloresRestaurante[3],
                       labelText: 'Precio',
                       labelStyle: TextStyle(
-                        color: Colors.black, 
+                        color: widget.coloresRestaurante[4], 
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xFFD2691E),
+                          color: widget.coloresRestaurante[2]!,
                           width: 1.3,
                         ),
                         borderRadius: BorderRadius.circular(18.0), 
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xFFD2691E),
+                          color: widget.coloresRestaurante[2]!,
                           width: 1.3,
                         ),
                         borderRadius: BorderRadius.circular(18.0), 
@@ -552,21 +552,21 @@ class _REG_ComboState extends State<REG_Combo> {
                       },
                       decoration: InputDecoration(
                       filled: true, 
-                      fillColor: Color(0xFFffffff),
+                      fillColor: widget.coloresRestaurante[3],
                       labelText: 'Disponibilidad',
                       labelStyle: TextStyle(
-                        color: Colors.black, 
+                        color: widget.coloresRestaurante[4], 
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xFFD2691E),
+                          color: widget.coloresRestaurante[2]!,
                           width: 1.3,
                         ),
                         borderRadius: BorderRadius.circular(18.0), 
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xFFD2691E),
+                          color: widget.coloresRestaurante[2]!,
                           width: 1.3,
                         ),
                         borderRadius: BorderRadius.circular(18.0), 
@@ -607,21 +607,21 @@ class _REG_ComboState extends State<REG_Combo> {
                             },
                             decoration: InputDecoration(
                             filled: true, 
-                            fillColor: Color(0xFFffffff),
+                            fillColor: widget.coloresRestaurante[3],
                             labelText: 'Categoría',
                             labelStyle: TextStyle(
-                              color: Colors.black, 
+                              color: widget.coloresRestaurante[4], 
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFFD2691E),
+                                color: widget.coloresRestaurante[2]!,
                                 width: 1.3,
                               ),
                               borderRadius: BorderRadius.circular(18.0), 
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFFD2691E),
+                                color: widget.coloresRestaurante[2]!,
                                 width: 1.3,
                               ),
                               borderRadius: BorderRadius.circular(18.0), 
@@ -641,7 +641,7 @@ class _REG_ComboState extends State<REG_Combo> {
                     ElevatedButton(
                       onPressed: () => _mostrarSeleccionProductos(context),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFFFA500),
+                        backgroundColor: widget.coloresRestaurante[1],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -652,7 +652,7 @@ class _REG_ComboState extends State<REG_Combo> {
                         'Agregar Producto',
                         style: TextStyle(
                           fontSize: 17, 
-                          color: Colors.white, 
+                          color: widget.coloresRestaurante[3], 
                           fontWeight: FontWeight.bold,
                         ), 
                       ),
@@ -679,7 +679,7 @@ class _REG_ComboState extends State<REG_Combo> {
                               child: Container(
                                 padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), // Ajusta el padding
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFFFA500), // Color de fondo de la tarjeta
+                                  color: widget.coloresRestaurante[1], // Color de fondo de la tarjeta
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: ListTile(
@@ -692,20 +692,20 @@ class _REG_ComboState extends State<REG_Combo> {
                                           errorBuilder: (context, error, stackTrace) => Icon(
                                             Icons.food_bank,
                                             size: 50,
-                                            color: Colors.white,
+                                            color: widget.coloresRestaurante[3],
                                           ),
                                         )
                                       : Icon(
                                           Icons.food_bank,
                                           size: 50,
-                                          color: Colors.white,
+                                          color: widget.coloresRestaurante[3],
                                         ),
                                   title: Text(
                                     producto['nombre'],
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: widget.coloresRestaurante[3]),
                                   ),
                                   trailing: IconButton(
-                                    icon: Icon(Icons.remove_circle, color: Colors.white),
+                                    icon: Icon(Icons.remove_circle, color: widget.coloresRestaurante[3]),
                                     onPressed: () {
                                       setState(() {
                                         _productosSeleccionados.remove(producto);
@@ -724,7 +724,7 @@ class _REG_ComboState extends State<REG_Combo> {
                       ElevatedButton(
                         onPressed: _submit,
                         style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFD2691E),
+                        backgroundColor: widget.coloresRestaurante[2]!,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -735,7 +735,7 @@ class _REG_ComboState extends State<REG_Combo> {
                           'Registrar',
                           style: TextStyle(
                             fontSize: 17, 
-                            color: Colors.white, 
+                            color: widget.coloresRestaurante[3], 
                           ), 
                         ),
                       )

@@ -44,7 +44,7 @@ class _EditarcocinaState extends State<Editarcocina> {
         SnackBar(
           content: Text(
             'Datos actualizados correctamente',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.coloresRestaurante[3]),
           ),
           backgroundColor: Colors.black.withOpacity(0.7),
           behavior: SnackBarBehavior.floating,
@@ -64,7 +64,7 @@ class _EditarcocinaState extends State<Editarcocina> {
         SnackBar(
           content: Text(
             'Error al actualizar los datos',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.coloresRestaurante[3]),
           ),
           backgroundColor: Colors.black.withOpacity(0.7),
           behavior: SnackBarBehavior.floating,
@@ -97,19 +97,19 @@ class _EditarcocinaState extends State<Editarcocina> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Editar Categoría',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -124,21 +124,21 @@ class _EditarcocinaState extends State<Editarcocina> {
               controller: nombreController,
               decoration: InputDecoration(
                 filled: true, 
-                fillColor: Color(0xFFffffff),
+                fillColor: widget.coloresRestaurante[3],
                 labelText: 'Nombre',
                 labelStyle: TextStyle(
-                  color: Colors.black, 
+                  color: widget.coloresRestaurante[4], 
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[1]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[1]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
@@ -150,21 +150,21 @@ class _EditarcocinaState extends State<Editarcocina> {
               controller: descripcionController,
               decoration: InputDecoration(
                 filled: true, 
-                fillColor: Color(0xFFffffff),
+                fillColor: widget.coloresRestaurante[3],
                 labelText: 'Descripción',
                 labelStyle: TextStyle(
-                  color: Colors.black, 
+                  color: widget.coloresRestaurante[4], 
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[1]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[1]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
@@ -176,7 +176,7 @@ class _EditarcocinaState extends State<Editarcocina> {
               child: ElevatedButton(
                 onPressed: actualizarcocina,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFFFA500), 
+                  backgroundColor: widget.coloresRestaurante[1], 
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25), 
                   ),
@@ -187,7 +187,7 @@ class _EditarcocinaState extends State<Editarcocina> {
                   "Actualizar",
                   style: TextStyle(
                     fontSize: 17, 
-                    color: Colors.white, 
+                    color: widget.coloresRestaurante[3], 
                     fontWeight: FontWeight.bold,
                   ),
                 ),

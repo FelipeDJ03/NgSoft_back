@@ -59,7 +59,7 @@ class _ListaVentasState extends State<ListaVentas> {
                       Text(
                         "Folio: ${ds['folio']}",
                         style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: widget.coloresRestaurante[4],
                           fontSize: 17.0,
                           fontWeight: FontWeight.bold,
                         ),
@@ -67,7 +67,7 @@ class _ListaVentasState extends State<ListaVentas> {
                       Text(
                         "\$${ds['total']}",
                         style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: widget.coloresRestaurante[4],
                           fontSize: 17.0,
                           fontWeight: FontWeight.bold,
                         ),
@@ -81,15 +81,15 @@ class _ListaVentasState extends State<ListaVentas> {
                   backgroundColor: Color(0xFFFFFDD0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(2),
-                    side: BorderSide(color: Color(0xFF556B2F), width: 0.7),
+                    side: BorderSide(color: widget.coloresRestaurante[0]!, width: 0.7),
                   ),
                   collapsedBackgroundColor: Color(0xFFFFFDD0),
                   collapsedShape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(2),
-                    side: BorderSide(color: Color(0xFF556B2F), width: 0.7),
+                    side: BorderSide(color: widget.coloresRestaurante[0]!, width: 0.7),
                   ),
-                  iconColor: Color(0xFFD2691E),
-                  collapsedIconColor: Color(0xFFD2691E),
+                  iconColor: widget.coloresRestaurante[2],
+                  collapsedIconColor: widget.coloresRestaurante[2],
                   children: [
                     Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -97,7 +97,7 @@ class _ListaVentasState extends State<ListaVentas> {
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 0),
                         child: Divider(
-                          color: Color(0xFF556B2F),
+                          color: widget.coloresRestaurante[0]!,
                           thickness: 0.8,
                         ),
                       ),
@@ -119,7 +119,7 @@ class _ListaVentasState extends State<ListaVentas> {
                                         
                                         "Método de Pago: ${ds['metodoPago']}",
                                         style: TextStyle(
-                                          color: Color.fromARGB(255, 0, 0, 0),
+                                          color: widget.coloresRestaurante[4],
                                           fontSize: 16.0,
                                         ),
                                       ),
@@ -127,7 +127,7 @@ class _ListaVentasState extends State<ListaVentas> {
                                     Text(
                                       "Hora: ${ds['hora']}",
                                       style: TextStyle(
-                                        color: Color.fromARGB(255, 0, 0, 0),
+                                        color: widget.coloresRestaurante[4],
                                         fontSize: 16.0,
                                       ),
                                     ),
@@ -152,7 +152,7 @@ class _ListaVentasState extends State<ListaVentas> {
                                           child: Text(
                                             "${producto['nombre']}",
                                             style: TextStyle(
-                                              color: Color.fromARGB(255, 0, 0, 0),
+                                              color: widget.coloresRestaurante[4],
                                               fontSize: 16.0,
                                             ),
                                           ),
@@ -160,7 +160,7 @@ class _ListaVentasState extends State<ListaVentas> {
                                         Text(
                                           "\$${producto['precio']}",
                                           style: TextStyle(
-                                            color: Color.fromARGB(255, 0, 0, 0),
+                                            color: widget.coloresRestaurante[4],
                                             fontSize: 16.0,
                                           ),
                                         ),
@@ -171,7 +171,7 @@ class _ListaVentasState extends State<ListaVentas> {
                             ),
                             SizedBox(height: 10),
                             Divider(
-                              color: Color(0xFF556B2F),
+                              color: widget.coloresRestaurante[0]!,
                               thickness: 0.8,
                               height: 20,
                             ),
@@ -221,19 +221,19 @@ class _ListaVentasState extends State<ListaVentas> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0]!,
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Ventas',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold, 
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),

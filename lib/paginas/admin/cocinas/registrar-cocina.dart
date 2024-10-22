@@ -37,19 +37,19 @@ class _REG_cocinaState extends State<REG_cocina> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Cocinas',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -65,21 +65,21 @@ class _REG_cocinaState extends State<REG_cocina> {
                 controller: nombrecontroller,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color(0xFFffffff),
+                  fillColor: widget.coloresRestaurante[3],
                   labelText: 'Nombre',
                   labelStyle: TextStyle(
-                    color: Colors.black,
+                    color: widget.coloresRestaurante[4],
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
@@ -97,21 +97,21 @@ class _REG_cocinaState extends State<REG_cocina> {
                 controller: descripcioncontroller,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color(0xFFffffff),
+                  fillColor: widget.coloresRestaurante[3],
                   labelText: 'Descripción',
                   labelStyle: TextStyle(
-                    color: Colors.black,
+                    color: widget.coloresRestaurante[4],
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
@@ -141,7 +141,7 @@ class _REG_cocinaState extends State<REG_cocina> {
                           SnackBar(
                             content: Text(
                               'La Cocina se ha registrado de forma exitosa',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: widget.coloresRestaurante[3]),
                             ),
                             backgroundColor: Colors.black.withOpacity(0.7),
                             behavior: SnackBarBehavior.floating,
@@ -159,7 +159,7 @@ class _REG_cocinaState extends State<REG_cocina> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFFA500), // Color de fondo del botón
+                    backgroundColor: widget.coloresRestaurante[1], // Color de fondo del botón
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25), // Borde redondeado del botón
                     ),
@@ -170,7 +170,7 @@ class _REG_cocinaState extends State<REG_cocina> {
                     "Agregar",
                     style: TextStyle(
                       fontSize: 17,
-                      color: Colors.white,
+                      color: widget.coloresRestaurante[3],
                       fontWeight: FontWeight.bold,
                     ),
                   ),

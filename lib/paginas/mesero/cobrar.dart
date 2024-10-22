@@ -133,7 +133,7 @@ void _showCobrarDialog() {
           return AlertDialog(
             title: Text(
               'Método de pago',
-              style: TextStyle(color: Color(0xFF556B2F)),
+              style: TextStyle(color: widget.coloresRestaurante[0],),
             ),
             content: SingleChildScrollView(
               child: Column(
@@ -177,11 +177,11 @@ void _showCobrarDialog() {
                       labelStyle: TextStyle(color: Colors.black),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: Colors.orange),
+                        borderSide: BorderSide(color: widget.coloresRestaurante[1]!),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: Colors.orange),
+                        borderSide: BorderSide(color: widget.coloresRestaurante[1]!),
                       ),
                     ),
                     onChanged: (value) {
@@ -230,10 +230,10 @@ void _showCobrarDialog() {
               ElevatedButton(
                 child: Text(
                   'Finalizar',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: widget.coloresRestaurante[3]),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
+                  backgroundColor: widget.coloresRestaurante[1]!,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
@@ -266,7 +266,7 @@ void _showCobrarDialog2() {
             return AlertDialog(
               title: Text(
                 'Venta Finalizada',
-                style: TextStyle(color: Color(0xFF556B2F)),
+                style: TextStyle(color: widget.coloresRestaurante[0],),
               ),
               content: SingleChildScrollView(
                 child: Column(),
@@ -275,14 +275,14 @@ void _showCobrarDialog2() {
                 TextButton(
                   child: Text(
                     'Regresar al menú',
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: widget.coloresRestaurante[4]),
                   ),
                   onPressed: () {
                     Navigator.popUntil(context, ModalRoute.withName('/'));
                   },
                 ),
                 ElevatedButton(
-                  child: Text('Enviar WhatsApp', style: TextStyle(color: Colors.white),),
+                  child: Text('Enviar WhatsApp', style: TextStyle(color: widget.coloresRestaurante[3]),),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                   ),
@@ -309,7 +309,7 @@ void _showCobrarDialog3() {
           return AlertDialog(
             title: Text(
               'Enviar comprobante',
-              style: TextStyle(color: Color(0xFF556B2F)),
+              style: TextStyle(color: widget.coloresRestaurante[0],),
             ),
             content: SingleChildScrollView(
               child: Column(
@@ -327,12 +327,12 @@ void _showCobrarDialog3() {
                       ],
                       decoration: InputDecoration(
                         labelText: 'Número de teléfono', 
-                        labelStyle: TextStyle(color: Colors.black),
+                        labelStyle: TextStyle(color: widget.coloresRestaurante[4]),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.orange),
+                          borderSide: BorderSide(color: widget.coloresRestaurante[1]!),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.orange),
+                          borderSide: BorderSide(color: widget.coloresRestaurante[1]!),
                         ),
                       ),
                       onChanged: (value) {
@@ -350,14 +350,14 @@ void _showCobrarDialog3() {
               TextButton(
                 child: Text(
                   'Cancelar',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: widget.coloresRestaurante[4]),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               ElevatedButton(
-                child: Text('Enviar WhatsApp', style: TextStyle(color: Colors.white),),
+                child: Text('Enviar WhatsApp', style: TextStyle(color: widget.coloresRestaurante[3]),),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                 ),
@@ -412,19 +412,19 @@ String _createWhatsAppMessage() {
     var totalPorComensal = _calculateTotalPerComensal();
     return Scaffold(
       appBar: AppBar(
-      backgroundColor: Color(0xFF556B2F),
+      backgroundColor: widget.coloresRestaurante[0]!,
       elevation: 0,
       title: Text(
         'Cobrar - Mesa ${widget.mesaId}',
         style: TextStyle(
-          color: Colors.white,
+          color: widget.coloresRestaurante[3],
           fontSize: 24.0,
           fontWeight: FontWeight.bold,
         ),
       ),
       centerTitle: true,
       iconTheme: IconThemeData(
-        color: Colors.white,
+        color: widget.coloresRestaurante[3],
       ),
     ),
 
@@ -453,7 +453,7 @@ String _createWhatsAppMessage() {
                             Text(
                               'Comensal $comensal',
                               style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
+                                color: widget.coloresRestaurante[4],
                                 fontSize: 17.0,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -461,7 +461,7 @@ String _createWhatsAppMessage() {
                             Text(
                               '\$${totalPorComensal[comensal]?.toStringAsFixed(2) ?? '0.00'}',
                               style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
+                                color: widget.coloresRestaurante[4],
                                 fontSize: 17.0,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -470,18 +470,18 @@ String _createWhatsAppMessage() {
                         ),
                       ),
                       tilePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      backgroundColor: Color(0xFFFFFDD0),
+                      backgroundColor: widget.coloresRestaurante[3],
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(2),
-                        side: BorderSide(color: Color(0xFF556B2F), width: 0.7),
+                        side: BorderSide(color: widget.coloresRestaurante[0]!, width: 0.7),
                       ),
-                      collapsedBackgroundColor: Color(0xFFFFFDD0),
+                      collapsedBackgroundColor: widget.coloresRestaurante[3],
                       collapsedShape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(2),
-                        side: BorderSide(color: Color(0xFF556B2F), width: 0.7),
+                        side: BorderSide(color: widget.coloresRestaurante[0]!, width: 0.7),
                       ),
-                      iconColor: Color(0xFFD2691E),
-                      collapsedIconColor: Color(0xFFD2691E),
+                      iconColor: widget.coloresRestaurante[2],
+                      collapsedIconColor: widget.coloresRestaurante[2],
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -489,7 +489,7 @@ String _createWhatsAppMessage() {
                             Container(
                               margin: EdgeInsets.symmetric(horizontal: 0),
                               child: Divider(
-                                color: Color(0xFF556B2F),
+                                color: widget.coloresRestaurante[0]!,
                                 thickness: 0.8,
                               ),
                             ),
@@ -508,7 +508,7 @@ String _createWhatsAppMessage() {
                                             Text(
                                               "Descripción",
                                               style: TextStyle(
-                                                color: Color.fromARGB(255, 0, 0, 0),
+                                                color: widget.coloresRestaurante[4],
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -521,7 +521,7 @@ String _createWhatsAppMessage() {
                                                 child: Text(
                                                   "$index. ${platillo['nombre'] ?? 'Sin nombre'}",
                                                   style: TextStyle(
-                                                    color: Color.fromARGB(255, 0, 0, 0),
+                                                    color: widget.coloresRestaurante[4],
                                                     fontSize: 16.0,
                                                   ),
                                                 ),
@@ -537,7 +537,7 @@ String _createWhatsAppMessage() {
                                           Text(
                                             "Cantidad",
                                             style: TextStyle(
-                                              color: Color.fromARGB(255, 0, 0, 0),
+                                              color: widget.coloresRestaurante[4],
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -548,7 +548,7 @@ String _createWhatsAppMessage() {
                                               child: Text(
                                                 "${platillo['cantidad'] ?? 0}",
                                                 style: TextStyle(
-                                                  color: Color.fromARGB(255, 0, 0, 0),
+                                                  color: widget.coloresRestaurante[4],
                                                   fontSize: 16.0,
                                                 ),
                                               ),
@@ -563,7 +563,7 @@ String _createWhatsAppMessage() {
                                           Text(
                                             "Precio",
                                             style: TextStyle(
-                                              color: Color.fromARGB(255, 0, 0, 0),
+                                              color: widget.coloresRestaurante[4],
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -574,7 +574,7 @@ String _createWhatsAppMessage() {
                                               child: Text(
                                                 "\$${platillo['precio']?.toStringAsFixed(2) ?? '0.00'}",
                                                 style: TextStyle(
-                                                  color: Color.fromARGB(255, 0, 0, 0),
+                                                  color: widget.coloresRestaurante[4],
                                                   fontSize: 16.0,
                                                 ),
                                               ),
@@ -586,7 +586,7 @@ String _createWhatsAppMessage() {
                                   ),
                                   SizedBox(height: 10),
                                   Divider(
-                                    color: Color(0xFF556B2F),
+                                    color: widget.coloresRestaurante[0]!,
                                     thickness: 0.8,
                                     height: 20,
                                   ),
@@ -598,7 +598,7 @@ String _createWhatsAppMessage() {
                                         child: Text(
                                           "TOTAL",
                                           style: TextStyle(
-                                            color: Color.fromARGB(255, 0, 0, 0),
+                                            color: widget.coloresRestaurante[4],
                                             fontSize: 16.0,
                                           ),
                                         ),
@@ -606,7 +606,7 @@ String _createWhatsAppMessage() {
                                       Text(
                                         '\$${totalPorComensal[comensal]?.toStringAsFixed(2) ?? '0.00'}',
                                         style: TextStyle(
-                                          color: Color.fromARGB(255, 0, 0, 0),
+                                          color: widget.coloresRestaurante[4],
                                           fontSize: 16.0,
                                         ),
                                       ),
@@ -642,7 +642,7 @@ String _createWhatsAppMessage() {
             ElevatedButton(
                         onPressed: _showCobrarDialog,
                         style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFFFA500),
+                        backgroundColor: widget.coloresRestaurante[1],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -653,7 +653,7 @@ String _createWhatsAppMessage() {
                         'Cobrar',
                         style: TextStyle(
                           fontSize: 17, 
-                          color: Colors.white, 
+                          color: widget.coloresRestaurante[3], 
                           fontWeight: FontWeight.bold,
                         ), 
                       ),

@@ -111,6 +111,9 @@ Color _convertirHexAColor(String hexColor) {
       backgroundColor: Color.fromARGB(255, 233, 233, 233), // Color de fondo
       appBar: AppBar(
   backgroundColor: color1,
+  iconTheme: IconThemeData(
+    color: Colors.white, // Color blanco para el ícono de menú y flecha de regreso
+  ),
   title: Row(
     children: [
       _userImageUrl != null
@@ -231,7 +234,7 @@ Color _convertirHexAColor(String hexColor) {
               Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.person, color: Colors.orange, size: 35,),
+                    leading: Icon(Icons.person, color: color2, size: 35,),
                     title: Text(
                       'Usuarios',
                       style: TextStyle(
@@ -255,7 +258,7 @@ Color _convertirHexAColor(String hexColor) {
               Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.category, color: Colors.orange, size: 35,),
+                    leading: Icon(Icons.category, color: color2, size: 35,),
                     title: Text(
                       'Categorías',
                       style: TextStyle(
@@ -279,7 +282,7 @@ Color _convertirHexAColor(String hexColor) {
               Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.category, color: Colors.orange, size: 35,),
+                    leading: Icon(Icons.kitchen, color: color2, size: 35,),
                     title: Text(
                       'Cocinas',
                       style: TextStyle(
@@ -303,7 +306,7 @@ Color _convertirHexAColor(String hexColor) {
               Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.fastfood, color: Colors.orange, size: 35,),
+                    leading: Icon(Icons.fastfood, color: color2, size: 35,),
                     title: Text(
                       'Productos',
                       style: TextStyle(
@@ -327,7 +330,7 @@ Color _convertirHexAColor(String hexColor) {
               Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.table_bar, color: Colors.orange, size: 35,),
+                    leading: Icon(Icons.table_bar, color: color2, size: 35,),
                     title: Text(
                       'Mesas',
                       style: TextStyle(
@@ -351,7 +354,7 @@ Color _convertirHexAColor(String hexColor) {
               Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.local_offer, color: Colors.orange, size: 35,),
+                    leading: Icon(Icons.local_offer, color: color2, size: 35,),
                     title: Text(
                       'Combos',
                       style: TextStyle(
@@ -375,7 +378,7 @@ Color _convertirHexAColor(String hexColor) {
               Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.settings, color: Colors.orange, size: 35,),
+                    leading: Icon(Icons.settings, color: color2, size: 35,),
                     title: Text(
                       'Configuracion',
                       style: TextStyle(
@@ -422,7 +425,7 @@ Color _convertirHexAColor(String hexColor) {
               ),
           ),
 
-    );
+    ); 
 
     
   }

@@ -6,10 +6,12 @@ class Editarcategoria extends StatefulWidget {
     final List<Color?> coloresRestaurante;
 
   const Editarcategoria({Key? key, required this.userId,required this.coloresRestaurante}) : super(key: key);
+  
 
   @override
   _EditarcategoriaState createState() => _EditarcategoriaState();
 }
+
 
 class _EditarcategoriaState extends State<Editarcategoria> {
   TextEditingController nombreController = TextEditingController();
@@ -44,9 +46,9 @@ class _EditarcategoriaState extends State<Editarcategoria> {
         SnackBar(
           content: Text(
             'Datos actualizados correctamente',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.coloresRestaurante[3]),
           ),
-          backgroundColor: Colors.black.withOpacity(0.7),
+          backgroundColor: widget.coloresRestaurante[4],
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
@@ -64,7 +66,7 @@ class _EditarcategoriaState extends State<Editarcategoria> {
         SnackBar(
           content: Text(
             'Error al actualizar los datos',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.coloresRestaurante[3]),
           ),
           backgroundColor: Colors.black.withOpacity(0.7),
           behavior: SnackBarBehavior.floating,
@@ -78,6 +80,7 @@ class _EditarcategoriaState extends State<Editarcategoria> {
       );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -97,19 +100,19 @@ class _EditarcategoriaState extends State<Editarcategoria> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Editar Categoría',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -124,21 +127,21 @@ class _EditarcategoriaState extends State<Editarcategoria> {
               controller: nombreController,
               decoration: InputDecoration(
                 filled: true, 
-                fillColor: Color(0xFFffffff),
+                fillColor: widget.coloresRestaurante[3],
                 labelText: 'Nombre',
                 labelStyle: TextStyle(
                   color: Colors.black, 
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[2]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[2]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
@@ -150,21 +153,21 @@ class _EditarcategoriaState extends State<Editarcategoria> {
               controller: descripcionController,
               decoration: InputDecoration(
                 filled: true, 
-                fillColor: Color(0xFFffffff),
+                fillColor: widget.coloresRestaurante[3],
                 labelText: 'Descripción',
                 labelStyle: TextStyle(
-                  color: Colors.black, 
+                  color: widget.coloresRestaurante[4], 
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[2]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Color(0xFFD2691E),
+                    color: widget.coloresRestaurante[2]!,
                     width: 1.3,
                   ),
                   borderRadius: BorderRadius.circular(18.0), 
@@ -176,7 +179,7 @@ class _EditarcategoriaState extends State<Editarcategoria> {
               child: ElevatedButton(
                 onPressed: actualizarCategoria,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFFFA500), 
+                  backgroundColor: widget.coloresRestaurante[1], 
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25), 
                   ),
@@ -187,7 +190,7 @@ class _EditarcategoriaState extends State<Editarcategoria> {
                   "Actualizar",
                   style: TextStyle(
                     fontSize: 17, 
-                    color: Colors.white, 
+                    color: widget.coloresRestaurante[3], 
                     fontWeight: FontWeight.bold,
                   ),
                 ),

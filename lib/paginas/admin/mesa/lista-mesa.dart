@@ -20,7 +20,7 @@ class _ListaMesaState extends State<ListaMesa> {
   TextEditingController searchController = TextEditingController();
   String searchText = '';
 
-  @override
+  @override 
   void initState() {
     super.initState();
     getontheload();
@@ -79,8 +79,8 @@ class _ListaMesaState extends State<ListaMesa> {
                   var mesa = filteredMesas[startIndex + index];
                   String disponibilidad = mesa['disponibilidad'];
                   Color containerColor = disponibilidad == 'Disponible'
-                      ? Color(0xFFFFA500)
-                      : Color(0xFFD2691E);
+                      ? widget.coloresRestaurante[1]!
+                      : widget.coloresRestaurante[2]!;
 
                   return Expanded(
                     child: Container(
@@ -100,7 +100,7 @@ class _ListaMesaState extends State<ListaMesa> {
                               Text(
                                 "${mesa['nombre']}",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: widget.coloresRestaurante[3],
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -110,7 +110,7 @@ class _ListaMesaState extends State<ListaMesa> {
                               Text(
                                 "${mesa['descripcion']}",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: widget.coloresRestaurante[3],
                                   fontSize: 17.0,
                                 ),
                                 textAlign: TextAlign.center,
@@ -120,7 +120,7 @@ class _ListaMesaState extends State<ListaMesa> {
                                 "${mesa['comensales']} comensales",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: widget.coloresRestaurante[3],
                                   fontSize: 17.0,
                                 ),
                               ),
@@ -129,33 +129,21 @@ class _ListaMesaState extends State<ListaMesa> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   IconButton(
-                                    icon: Icon(Icons.edit_note_sharp, color: Colors.white),
+                                    icon: Icon(Icons.edit_note_sharp, color: widget.coloresRestaurante[3]),
                                     onPressed: () {
                                       editarDetallesmesa(mesa.id);
                                     },
                                   ),
                                   SizedBox(width: 8.0),
-                                  IconButton(
-                                    icon: Icon(Icons.delete_outline, color: Colors.white, size: 20),
-                                    onPressed: () async {
-                                      await DatabaseMethods().Eliminarmesa(mesa.id);
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Se ha eliminado una Mesa',
-                                            style: TextStyle(color: Colors.white),
-                                          ),
-                                          backgroundColor: Colors.black.withOpacity(0.7),
-                                          behavior: SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18),
-                                          ),
-                                          margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                          duration: Duration(milliseconds: 800),
-                                        ),
-                                      );
+                                  GestureDetector(
+                                    onTap: () {
+                                      ModalEliminar(mesa.id);
                                     },
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -185,7 +173,7 @@ class _ListaMesaState extends State<ListaMesa> {
             MaterialPageRoute(builder: (context) => REG_Mesa(alias: widget.alias,coloresRestaurante:widget.coloresRestaurante)
           ));
         },
-        child: Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: widget.coloresRestaurante[3]),
         backgroundColor: widget.coloresRestaurante[0],
       ),
       appBar: PreferredSize(
@@ -208,10 +196,10 @@ class _ListaMesaState extends State<ListaMesa> {
               controller: searchController,
               decoration: InputDecoration(
                 hintText: 'Buscar mesa...',
-                hintStyle: TextStyle(color: Colors.white),
+                hintStyle: TextStyle(color: widget.coloresRestaurante[3]),
                 border: InputBorder.none,
               ),
-              style: TextStyle(color: Colors.white, fontSize: 18.0),
+              style: TextStyle(color: widget.coloresRestaurante[3], fontSize: 18.0),
               onChanged: (value) {
                 setState(() {
                   searchText = value;
@@ -220,7 +208,7 @@ class _ListaMesaState extends State<ListaMesa> {
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -231,4 +219,137 @@ class _ListaMesaState extends State<ListaMesa> {
       ),
     );
   }
+
+
+  void ModalEliminar(String mesaID) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+          backgroundColor: Colors.transparent,
+          contentPadding: EdgeInsets.zero,
+          content: Container(
+            width: 300,
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 20),
+                Icon(
+                  Icons.check_circle_outline,
+                  color: widget.coloresRestaurante[1],
+                  size: 80,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Confirmar Acción',
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '¿Estás seguro que quieres eliminar esta Mesa?',
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 18,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          await DatabaseMethods().Eliminarmesa(mesaID);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Se ha eliminado una categoría',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              backgroundColor: Colors.black.withOpacity(0.7),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 20),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 10),
+                              duration: Duration(milliseconds: 800),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.green,
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 5,
+                        ),
+                        child: Text(
+                          'Sí',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.red,
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 5,
+                        ),
+                        child: Text(
+                          'No',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }

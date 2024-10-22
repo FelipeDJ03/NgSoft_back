@@ -42,7 +42,7 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
         SnackBar(
           content: Text(
             'No se ha agregado una imagen.',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.coloresRestaurante[3]),
           ),
           backgroundColor: Colors.black.withOpacity(0.7),
           behavior: SnackBarBehavior.floating,
@@ -76,7 +76,7 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
               width: double.infinity,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 borderRadius: BorderRadius.circular(18),
                 boxShadow: [
                   BoxShadow(
@@ -116,7 +116,7 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                           Navigator.of(ctx).pop();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor: widget.coloresRestaurante[3],
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -152,7 +152,7 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                 ),
                 child: Icon(
                   Icons.warning,
-                  color: Colors.white,
+                  color: widget.coloresRestaurante[3],
                   size: 50,
                 ),
               ),
@@ -212,7 +212,7 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                 width: double.infinity,
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: widget.coloresRestaurante[3],
                   borderRadius: BorderRadius.circular(18),
                   boxShadow: [
                     BoxShadow(
@@ -253,7 +253,7 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                             Navigator.of(context).pop();
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
+                            backgroundColor: widget.coloresRestaurante[3],
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -289,7 +289,7 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                   ),
                   child: Icon(
                     Icons.check,
-                    color: Colors.white,
+                    color: widget.coloresRestaurante[3],
                     size: 50,
                   ),
                 ),
@@ -340,19 +340,19 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Usuarios',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -379,21 +379,21 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                 TextFormField(
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Color(0xFFffffff),
+                    fillColor: widget.coloresRestaurante[3],
                     labelText: 'Correo electrónico',
                     labelStyle: TextStyle(
-                      color: Colors.black,
+                      color: widget.coloresRestaurante[4],
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
@@ -418,21 +418,21 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                 TextFormField(
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Color(0xFFffffff),
+                    fillColor: widget.coloresRestaurante[3],
                     labelText: 'Nombre de Usuario',
                     labelStyle: TextStyle(
-                      color: Colors.black,
+                      color: widget.coloresRestaurante[4],
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
@@ -455,21 +455,21 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                 TextFormField(
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Color(0xFFffffff),
+                    fillColor: widget.coloresRestaurante[3],
                     labelText: 'Apellidos',
                     labelStyle: TextStyle(
-                      color: Colors.black,
+                      color: widget.coloresRestaurante[4],
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
@@ -512,21 +512,21 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                   },
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Color(0xFFffffff),
+                    fillColor: widget.coloresRestaurante[3],
                     labelText: 'Rol',
                     labelStyle: TextStyle(
-                      color: Colors.black,
+                      color: widget.coloresRestaurante[4],
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
@@ -546,21 +546,21 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                 TextFormField(
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Color(0xFFffffff),
+                    fillColor: widget.coloresRestaurante[3],
                     labelText: 'Dirección',
                     labelStyle: TextStyle(
-                      color: Colors.black,
+                      color: widget.coloresRestaurante[4],
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
@@ -587,21 +587,21 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                 ],
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color(0xFFffffff),
+                  fillColor: widget.coloresRestaurante[3],
                   labelText: 'N° Telefónico',
                   labelStyle: TextStyle(
-                    color: Colors.black,
+                    color: widget.coloresRestaurante[4],
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFD2691E),
+                      color: widget.coloresRestaurante[2]!,
                       width: 1.3,
                     ),
                     borderRadius: BorderRadius.circular(18.0),
@@ -622,21 +622,21 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                 TextFormField(
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Color(0xFFffffff),
+                    fillColor: widget.coloresRestaurante[3],
                     labelText: 'Contraseña',
                     labelStyle: TextStyle(
-                      color: Colors.black,
+                      color: widget.coloresRestaurante[4],
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
@@ -679,21 +679,21 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                 TextFormField(
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Color(0xFFffffff),
+                    fillColor: widget.coloresRestaurante[3],
                     labelText: 'Confirmar Contraseña',
                     labelStyle: TextStyle(
-                      color: Colors.black,
+                      color: widget.coloresRestaurante[4],
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFD2691E),
+                        color: widget.coloresRestaurante[2]!,
                         width: 1.3,
                       ),
                       borderRadius: BorderRadius.circular(18.0),
@@ -724,13 +724,13 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
                       ),
-                      backgroundColor: Color(0xFFFFA500),
+                      backgroundColor: widget.coloresRestaurante[1],
                     ),
-                    child: const Text(
+                    child: Text(
                         'Registrar',
                         style: TextStyle(
                         fontSize: 17, 
-                        color: Colors.white, 
+                        color: widget.coloresRestaurante[3], 
                         fontWeight: FontWeight.bold,
                       ), 
                     ),
@@ -741,7 +741,7 @@ class _REG_USUARIOPaginaState extends State<REG_USUARIOPagina> {
                             onPressed: () => _mostrarAvisoPrivacidad(context),
                             child: Text(
                               'Politicas de privacidad',
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: widget.coloresRestaurante[4]),
                             ),
                           ),
               ],
@@ -760,6 +760,7 @@ void _mostrarAvisoPrivacidad(BuildContext context) {
         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
       ),
       builder: (BuildContext context) {
+        var widget;
         return Container(
           padding: EdgeInsets.all(20.0),
           child: SingleChildScrollView(
@@ -823,13 +824,13 @@ void _mostrarAvisoPrivacidad(BuildContext context) {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
                       ),
-                      backgroundColor: Color(0xFFFFA500),
+                      backgroundColor: widget.coloresRestaurante[1],
                     ),
-                    child: const Text(
+                    child: Text(
                         'Cerrar',
                         style: TextStyle(
                         fontSize: 17, 
-                        color: Colors.white, 
+                        color: widget.coloresRestaurante[3], 
                         fontWeight: FontWeight.bold,
                       ), 
                     ),            

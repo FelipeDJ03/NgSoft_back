@@ -135,7 +135,7 @@ class _OrdenEntregarState extends State<OrdenEntregar> {
 
                 if (groupedDocuments.isEmpty) {
                   return Center(
-                    child: Text('No hay platillos a entregar aun.', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black,)),
+                    child: Text('No hay platillos a entregar aun.', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: widget.coloresRestaurante[4])),
                   );
                 }
 
@@ -148,7 +148,7 @@ class _OrdenEntregarState extends State<OrdenEntregar> {
                     return Container(
                       margin: EdgeInsets.only(bottom: 9.0, left: 15, right: 15, top: 6),
                       child: Card(
-                        color: Color(0xFFFFFDD0),
+                        color: widget.coloresRestaurante[3],
                         elevation: 4,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -159,7 +159,7 @@ class _OrdenEntregarState extends State<OrdenEntregar> {
                             Container(
                               padding: EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
-                                color: Color(0xFFFFA500),
+                                color: widget.coloresRestaurante[1],
                                 borderRadius: BorderRadius.vertical(top: Radius.circular(10)), 
                                 boxShadow: [
                                   BoxShadow(
@@ -177,7 +177,7 @@ class _OrdenEntregarState extends State<OrdenEntregar> {
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                                    color: widget.coloresRestaurante[4]
                                   ),
                                 ),
                               ),

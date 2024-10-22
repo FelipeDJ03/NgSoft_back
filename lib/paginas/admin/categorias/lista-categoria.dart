@@ -12,10 +12,7 @@ class ListaCategoria extends StatefulWidget {
       final List<Color?> coloresRestaurante;
 
   const ListaCategoria({super.key,required this.alias,required this.coloresRestaurante});
-    
- 
-
-
+  
   @override
   _ListaCategoriaState createState() => _ListaCategoriaState();
 }
@@ -70,7 +67,7 @@ class _ListaCategoriaState extends State<ListaCategoria> {
                     padding: const EdgeInsets.all(18),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Color(0xFFFFA500),
+                      color: widget.coloresRestaurante[1],
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Row(
@@ -130,7 +127,7 @@ class _ListaCategoriaState extends State<ListaCategoria> {
                                       size: 20,
                                     ),
                                   ),
-                                ],
+                                ], 
                               ),
                             ],
                           ),
@@ -159,7 +156,7 @@ class _ListaCategoriaState extends State<ListaCategoria> {
               context, MaterialPageRoute(builder: (context) => REG_Categoria(alias: widget.alias,coloresRestaurante:widget.coloresRestaurante)));
         },
         child: Icon(Icons.add, color: Colors.white),
-        backgroundColor: Color(0xFFD2691E),
+        backgroundColor: widget.coloresRestaurante[2],
       ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
@@ -175,7 +172,7 @@ class _ListaCategoriaState extends State<ListaCategoria> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
             title: const Text(
               'Categorías',
@@ -236,7 +233,7 @@ class _ListaCategoriaState extends State<ListaCategoria> {
                 SizedBox(height: 20),
                 Icon(
                   Icons.check_circle_outline,
-                  color: Color(0xFFFFA500),
+                  color: widget.coloresRestaurante[1],
                   size: 80,
                 ),
                 SizedBox(height: 20),
@@ -337,3 +334,5 @@ class _ListaCategoriaState extends State<ListaCategoria> {
     );
   }
 }
+
+

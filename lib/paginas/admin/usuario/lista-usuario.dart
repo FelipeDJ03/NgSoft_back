@@ -63,9 +63,9 @@ class _ListaUsuarioState extends State<ListaUsuario> {
                     padding: const EdgeInsets.all(0),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Color(0xFFFFFDD0),
+                      color: widget.coloresRestaurante[1],
                       borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: Color(0xFF556B2F), width: 2),
+                      border: Border.all(color: widget.coloresRestaurante[3]!, width: 2),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,7 +107,7 @@ class _ListaUsuarioState extends State<ListaUsuario> {
                             ],
                           ),
                         ),
-                        Divider(color: Color(0xFF556B2F), thickness: 2, height: 0),
+                        Divider(color: widget.coloresRestaurante[3]!, thickness: 2, height: 0),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Column(
@@ -116,7 +116,7 @@ class _ListaUsuarioState extends State<ListaUsuario> {
                               Row(
                                 children: [
                                   SizedBox(width: 15),
-                                  Icon(Icons.location_on, color: Colors.orange, size: 16),
+                                  Icon(Icons.location_on, color: widget.coloresRestaurante[3], size: 16),
                                   SizedBox(width: 5),
                                   Text(
                                     "(${ds['direccion']})",
@@ -131,7 +131,7 @@ class _ListaUsuarioState extends State<ListaUsuario> {
                               Row(
                                 children: [
                                   SizedBox(width: 15),
-                                  Icon(Icons.email, color: Colors.orange, size: 16),
+                                  Icon(Icons.email, color: widget.coloresRestaurante[3], size: 16),
                                   SizedBox(width: 5),
                                   Text(
                                     "(${ds['email']})",
@@ -146,7 +146,7 @@ class _ListaUsuarioState extends State<ListaUsuario> {
                               Row(
                                 children: [
                                   SizedBox(width: 15),
-                                  Icon(Icons.phone, color: Colors.orange, size: 16),
+                                  Icon(Icons.phone, color: widget.coloresRestaurante[3], size: 16),
                                   SizedBox(width: 5),
                                   Text(
                                     "(${ds['celular']})",
@@ -164,30 +164,18 @@ class _ListaUsuarioState extends State<ListaUsuario> {
                                     onTap: () {
                                       editarDetallesUsuario(ds.id);
                                     },
-                                    child: Icon(Icons.edit, color: Colors.orange),
+                                    child: Icon(Icons.edit, color: widget.coloresRestaurante[3]),
                                   ),
                                   SizedBox(width: 16),
                                   GestureDetector(
-                                    onTap: () async {
-                                      await DatabaseMethods().Eliminarusuario(ds.id);
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Se ha eliminado un usuario',
-                                            style: TextStyle(color: Colors.white),
-                                          ),
-                                          backgroundColor: Colors.black.withOpacity(0.7),
-                                          behavior: SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18),
-                                          ),
-                                          margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                          duration: Duration(milliseconds: 800),
-                                        ),
-                                      );
+                                    onTap: () {
+                                      ModalEliminar(ds.id);
                                     },
-                                    child: Icon(Icons.delete, color: Colors.orange),
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
                                   ),
                                 ],
                               )
@@ -217,8 +205,8 @@ class _ListaUsuarioState extends State<ListaUsuario> {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => REG_USUARIOPagina(alias:widget.alias,coloresRestaurante:widget.coloresRestaurante)));
         },
-        child: Icon(Icons.add, color: Colors.white),
-        backgroundColor: Color(0xFFFFA500),
+        child: Icon(Icons.add, color: widget.coloresRestaurante[3]),
+        backgroundColor: widget.coloresRestaurante[2],
       ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
@@ -234,19 +222,19 @@ class _ListaUsuarioState extends State<ListaUsuario> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0]!,
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Usuarios',
               style: TextStyle(
-                color: Colors.white,
+                color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
             iconTheme: IconThemeData(
-              color: Colors.white,
+              color: widget.coloresRestaurante[3],
             ),
           ),
         ),
@@ -259,6 +247,138 @@ class _ListaUsuarioState extends State<ListaUsuario> {
           ],
         ),
       ),
+    );
+  }
+
+
+void ModalEliminar(String usuarioID) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+          backgroundColor: Colors.transparent,
+          contentPadding: EdgeInsets.zero,
+          content: Container(
+            width: 300,
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 20),
+                Icon(
+                  Icons.check_circle_outline,
+                  color: widget.coloresRestaurante[1],
+                  size: 80,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Confirmar Acción',
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '¿Estás seguro que quieres eliminar este Usuario? ',
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 18,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          await DatabaseMethods().Eliminarusuario(usuarioID);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Se ha eliminado un Usuario',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              backgroundColor: Colors.black.withOpacity(0.7),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 20),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 10),
+                              duration: Duration(milliseconds: 800),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.green,
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 5,
+                        ),
+                        child: Text(
+                          'Sí',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.red,
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 5,
+                        ),
+                        child: Text(
+                          'No',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
