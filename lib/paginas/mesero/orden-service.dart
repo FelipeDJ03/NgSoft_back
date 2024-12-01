@@ -8,11 +8,13 @@ class OrdenService {
     required String Id,
     required String nombre,
     required double precio,
+    required double tiempo,
     required String imagenUrl,
     required String mesaId,
     required int numeroComensal,
     required String alias,
     required String cocina,
+    required String disponibilidad_inventario,
     int cantidad = 1, required categoria,
   }) async {
     try {
@@ -28,6 +30,8 @@ class OrdenService {
         'alias':alias,
         'cocina':cocina,
         'categoria':categoria,
+        'tiempo':tiempo,
+        'disponibilidad_inventario':disponibilidad_inventario,
       });
     } catch (e) {
       print('Error al agregar producto al carrito: $e');
@@ -194,79 +198,82 @@ class OrdenService2 {
       'alias': alias,
     });
 
-    // Actualizar el campo 'ventas' en la colección 'productos'
-    for (var producto in productos) {
-      String productId = producto['Id']; // ID del producto
+    // Actualizar productos en Firestore
+    await Future.wait(productos.map((producto) async {
+      await actualizarProducto(producto['Id'], producto);
+    }));
 
-      // Obtener el documento del producto en la colección 'productos'
-      DocumentReference productoRef = _firestore.collection('productos').doc(productId);
+    // Actualizar ventas en categorías
+    await Future.wait(productos.map((producto) async {
+      await actualizarVentasCategoria(producto['categoria']);
+    }));
 
-      // Usar una transacción para leer y actualizar el campo 'ventas' atómicamente
-      try {
-        await _firestore.runTransaction((transaction) async {
-          DocumentSnapshot productoSnapshot = await transaction.get(productoRef);
+    // Eliminar registros de 'Orden' y actualizar disponibilidad de la mesa
+    await eliminarOrdenesYActualizarMesa(mesa);
 
-          if (productoSnapshot.exists) {
-            // Obtener el valor actual de 'ventas' y sumarle 1
-            int ventasActuales = productoSnapshot['ventas'] ?? 0; // Si el campo 'ventas' no existe, asumir que es 0
-            transaction.update(productoRef, {'ventas': ventasActuales + 1});
-          } else {
-            print('Producto no encontrado para ID: $productId');
-          }
-        });
-      } catch (e) {
-        print('Error al actualizar ventas del producto: $e');
-      }
-    }
-
-   // Actualizar el campo 'ventas' en la colección 'categorías'
-for (var producto in productos) {
-  String categoriaId = producto['categoria'];
-  print('Procesando categoría ID: $categoriaId');
-
-  DocumentReference categoriaRef = _firestore.collection('categoria').doc(categoriaId);
-
-  // Usar una transacción para leer y actualizar el campo 'ventas' atómicamente
-  // Usar una transacción para leer y actualizar el campo 'ventas' atómicamente
-try {
-  await _firestore.runTransaction((transaction) async {
-    DocumentSnapshot categoriaSnapshot = await transaction.get(categoriaRef);
-
-    if (categoriaSnapshot.exists) {
-      int ventasActuales = (categoriaSnapshot.data() as Map<String, dynamic>).containsKey('ventas') ? categoriaSnapshot['ventas'] : 0; // Verificar el valor
-      print('Ventas actuales: $ventasActuales');
-      transaction.update(categoriaRef, {'ventas': ventasActuales + 1});
-    } else {
-      print('Categoría no encontrada para ID: $categoriaId');
-    }
-  });
-} catch (e) {
-  print('Error al actualizar ventas de la categoría: ${e.toString()}');
-}
-
-}
-
-
-    // Eliminar el registro de la orden en la colección 'Orden'
-    try {
-      QuerySnapshot querySnapshot = await _firestore.collection('Orden').where('mesa', isEqualTo: mesa).get();
-      await Future.wait(querySnapshot.docs.map((doc) => doc.reference.delete())); // Eliminar todos los documentos encontrados
-    } catch (e) {
-      print('Error al eliminar la orden: $e');
-    }
-
-    // Actualizar el campo 'disponibilidad' en la colección 'mesa'
-    try {
-      await _firestore.collection('mesa').doc(mesa).update({
-        'disponibilidad': 'Disponible',
-      });
-    } catch (e) {
-      print('Error al actualizar disponibilidad de mesa: $e');
-    }
-
-  } catch (e) {
+    print('Registro de venta completado con éxito para venta ID: ${ventaRef.id}');
+  } catch (e, stacktrace) {
     print('Error al registrar la venta: $e');
+    print('Stacktrace: $stacktrace');
     throw Exception('Error al registrar la venta');
+  }
+}
+
+Future<void> actualizarProducto(String productId, Map<String, dynamic> producto) async {
+  DocumentReference productoRef = _firestore.collection('productos').doc(productId);
+  try {
+    await _firestore.runTransaction((transaction) async {
+      DocumentSnapshot productoSnapshot = await transaction.get(productoRef);
+      if (productoSnapshot.exists) {
+        Map<String, dynamic> productoData = productoSnapshot.data() as Map<String, dynamic>;
+        int ventasActuales = productoData['ventas'] ?? 0;
+        int unidadesActuales = productoData['unidades'] ?? 0;
+
+        Map<String, dynamic> updateData = {'ventas': ventasActuales + 1};
+        if (productoData['disponibilidad_inventario'] == 'Disponible') {
+          int nuevasUnidades = unidadesActuales - 1;
+          updateData['unidades'] = nuevasUnidades;
+          if (nuevasUnidades <= 0) {
+            updateData['disponibilidad'] = 'nodisponible';
+          }
+        }
+        transaction.update(productoRef, updateData);
+      } else {
+        print('Producto no encontrado: $productId');
+      }
+    });
+  } catch (e) {
+    print('Error al actualizar producto $productId: $e');
+  }
+}
+
+Future<void> actualizarVentasCategoria(String categoriaId) async {
+  DocumentReference categoriaRef = _firestore.collection('categoria').doc(categoriaId);
+  try {
+    await _firestore.runTransaction((transaction) async {
+      DocumentSnapshot categoriaSnapshot = await transaction.get(categoriaRef);
+      if (categoriaSnapshot.exists) {
+        int ventasActuales = categoriaSnapshot['ventas'] ?? 0;
+        transaction.update(categoriaRef, {'ventas': ventasActuales + 1});
+      } else {
+        print('Categoría no encontrada: $categoriaId');
+      }
+    });
+  } catch (e) {
+    print('Error al actualizar ventas de categoría $categoriaId: $e');
+  }
+}
+
+Future<void> eliminarOrdenesYActualizarMesa(String mesa) async {
+  try {
+    // Eliminar todas las órdenes asociadas con la mesa
+    QuerySnapshot querySnapshot = await _firestore.collection('Orden').where('mesa', isEqualTo: mesa).get();
+    await Future.wait(querySnapshot.docs.map((doc) => doc.reference.delete()));
+
+    // Actualizar la disponibilidad de la mesa
+    await _firestore.collection('mesa').doc(mesa).update({'disponibilidad': 'Disponible'});
+  } catch (e) {
+    print('Error al eliminar ordenes o actualizar mesa $mesa: $e');
   }
 }
 

@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 
 enum Disponibilidad { disponible, nodisponible }
 enum Habilitado { disponible, nodisponible }
+enum Disponibilidad_inventario{ disponible, nodisponible }
 
 class REG_Producto extends StatefulWidget {
   final String alias;
@@ -30,14 +31,17 @@ class _REG_ProductoState extends State<REG_Producto> {
   TextEditingController categoriaController = TextEditingController();
   TextEditingController cocinaController = TextEditingController();
   TextEditingController minutosController = TextEditingController();
+TextEditingController unidadesController = TextEditingController();
 
     Disponibilidad? _selectedDisponibilidad;
+    Disponibilidad_inventario? _selectedDisponibilidadinventario;
     Habilitado? _selectedHabilitado;
 
   File? _imagenSeleccionada;
   var _subiendo = false;
   String? _categoriaSeleccionada;
   String? _cocinaSeleccionada;
+
 
  
   void _submit() async {
@@ -83,19 +87,23 @@ class _REG_ProductoState extends State<REG_Producto> {
       final imagenUrl = await storageRef.getDownloadURL();
 
       Map<String, dynamic> productInfoMap = {
-        "nombre": nombreController.text,
-        "descripcion": descripcionController.text,
-        "precio": double.parse(precioController.text),
-        "categoria": _categoriaSeleccionada,
-        "cocina": _cocinaSeleccionada,
-        "imagen_url": imagenUrl,
-        "delivery":_selectedDisponibilidad == Disponibilidad.disponible ? 'Disponible' : 'nodisponible',
-        "disponibilidad":_selectedHabilitado == Habilitado.disponible ? 'Disponible' : 'nodisponible',
-        "estado":'activo',
-        "tiempo":double.parse(minutosController.text),
-        "Id": Id,
-        "alias":widget.alias
-      };
+      "nombre": nombreController.text,
+      "descripcion": descripcionController.text,
+      "precio": double.parse(precioController.text),
+      "categoria": _categoriaSeleccionada,
+      "cocina": _cocinaSeleccionada,
+      "imagen_url": imagenUrl,
+      "delivery": _selectedDisponibilidad == Disponibilidad.disponible ? 'Disponible' : 'nodisponible',
+      "disponibilidad": _selectedHabilitado == Habilitado.disponible ? 'Disponible' : 'nodisponible',
+      "disponibilidad_inventario": _selectedDisponibilidadinventario == Disponibilidad_inventario.disponible ? 'Disponible' : 'nodisponible',
+      "estado": 'activo',
+      "tiempo": double.parse(minutosController.text),
+      "Id": Id,
+      "alias": widget.alias,
+      // Agregar unidades solo si el inventario está habilitado
+      if (_selectedDisponibilidadinventario == Disponibilidad_inventario.disponible) 
+        "unidades": double.parse(unidadesController.text),
+    };
 
       await FirebaseFirestore.instance
           .collection('productos')
@@ -525,6 +533,95 @@ class _REG_ProductoState extends State<REG_Producto> {
                         return null;
                       },
                     ),
+                   SizedBox(height: 25,),
+                      DropdownButtonFormField<Disponibilidad_inventario>(
+                        value: _selectedDisponibilidadinventario,
+                        items: [
+                          DropdownMenuItem(
+                            value: Disponibilidad_inventario.disponible,
+                            child: Text('Disponible'),
+                          ),
+                          DropdownMenuItem(
+                            value: Disponibilidad_inventario.nodisponible,
+                            child: Text('No disponible'),
+                          ),
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedDisponibilidadinventario = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          filled: true, 
+                          fillColor: widget.coloresRestaurante[3],
+                          labelText: 'Habilitar inventario',
+                          labelStyle: TextStyle(
+                            color: widget.coloresRestaurante[4],
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: widget.coloresRestaurante[2]!,
+                              width: 1.3,
+                            ),
+                            borderRadius: BorderRadius.circular(18.0), 
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: widget.coloresRestaurante[2]!,
+                              width: 1.3,
+                            ),
+                            borderRadius: BorderRadius.circular(18.0), 
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Por favor selecciona una disponibilidad';
+                          }
+                          return null;
+                        },
+                      ),
+
+                      // Campo de unidades (solo visible si el inventario está habilitado)
+                      Visibility(
+                        visible: _selectedDisponibilidadinventario == Disponibilidad_inventario.disponible,
+                        child: Column(
+                          children: [
+                            SizedBox(height: 25,),
+                            TextFormField(
+                              controller: unidadesController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: widget.coloresRestaurante[3],
+                                labelText: 'Unidades en inventario',
+                                labelStyle: TextStyle(
+                                  color: widget.coloresRestaurante[4],
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: widget.coloresRestaurante[2]!,
+                                    width: 1.3,
+                                  ),
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: widget.coloresRestaurante[2]!,
+                                    width: 1.3,
+                                  ),
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (_selectedDisponibilidadinventario == Disponibilidad_inventario.disponible && (value == null || value.isEmpty)) {
+                                  return 'Por favor ingresa las unidades';
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
                     SizedBox(height: 25,),
                     StreamBuilder<QuerySnapshot>(
                       stream: DatabaseMethods().Obtenercategorias(widget.alias),

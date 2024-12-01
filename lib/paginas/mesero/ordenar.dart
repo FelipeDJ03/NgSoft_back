@@ -16,6 +16,7 @@ class OrdenarPantalla extends StatefulWidget {
 class _OrdenarPantallaState extends State<OrdenarPantalla> {
   List<Map<String, dynamic>> _platillos = [];
   ValueNotifier<double> _total = ValueNotifier<double>(0.0);
+  ValueNotifier<int> _tiempoEstimado = ValueNotifier<int>(0);
 
   void _calcularTotal() {
     _total.value = _platillos.fold(
@@ -23,6 +24,20 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
       (sum, item) => sum + item['precio'] * item['cantidad'],
     );
   }
+
+void _calcularTiempoEstimado() {
+  _tiempoEstimado.value = _platillos.fold<int>(
+    0,
+    (sum, item) {
+      // Imprimir el valor de 'tiempo' para verificarlo
+      print("Tiempo de ${item['nombre']}: ${item['tiempo']}");
+      return sum + ((item['tiempo'] ?? 0) as num).toInt();
+    },
+  );
+
+  print("Tiempo total estimado: $_tiempoEstimado");
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,13 +94,17 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                         'imagen_url': doc['imagen_url'],
                         'alias':widget.alias,
                         'cocina':doc['cocina'],
-                        'categoria':doc['categoria']
+                        'categoria':doc['categoria'],
+                         'tiempo':doc['tiempo'],
+                        'disponibilidad_inventario':doc['disponibilidad_inventario'],
                       };
                     }).toList();
 
                     // Calcular el nuevo total y actualizar el ValueNotifier
                     WidgetsBinding.instance.addPostFrameCallback((_) {
+                      _calcularTiempoEstimado();
                       _calcularTotal();
+                
                     });
 
                     return ListView.builder(
@@ -155,6 +174,14 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
+                                              Text(
+                                                "Tiempo:${productoCarrito['tiempo']} min",
+                                                style: TextStyle(
+                                                  color: widget.coloresRestaurante[3],
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -188,6 +215,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                                                             platillo['nombre'] == productoCarrito['nombre'] &&
                                                             platillo['comensal'] == productoCarrito['comensal']);
                                                         _calcularTotal();
+                                                        _calcularTiempoEstimado();
                                                       });
                                                     },
                                                     child: Icon(Icons.delete, color: widget.coloresRestaurante[3]),
@@ -212,8 +240,7 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                 },
               ),
             ),
-            SizedBox(height: 15,),
-            ValueListenableBuilder<double>(
+           ValueListenableBuilder<double>(
               valueListenable: _total,
               builder: (context, value, child) {
                 return Text(
@@ -222,7 +249,17 @@ class _OrdenarPantallaState extends State<OrdenarPantalla> {
                 );
               },
             ),
-            SizedBox(height: 15,),
+            SizedBox(height: 10),
+             ValueListenableBuilder<int>(
+                valueListenable: _tiempoEstimado,
+                builder: (context, value, child) {
+                  return Text(
+                    'Tiempo estimado: ${value} min',  // Eliminamos toStringAsFixed(2)
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  );
+                },
+              ),
+
             ElevatedButton(
               onPressed: () async {
                 try {
