@@ -396,7 +396,7 @@ class _REG_ComboState extends State<REG_Combo> {
             ],
           ),
           child: AppBar(
-            backgroundColor: Color(0xFF556B2F),
+            backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
             title: Text(
               'Agregar Combo',

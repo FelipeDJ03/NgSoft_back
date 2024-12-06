@@ -78,12 +78,12 @@ class _ListaVentasState extends State<ListaVentas> {
                 ),
 
                   tilePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  backgroundColor: Color(0xFFFFFDD0),
+                  backgroundColor:  widget.coloresRestaurante[3],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(2),
                     side: BorderSide(color: widget.coloresRestaurante[0]!, width: 0.7),
                   ),
-                  collapsedBackgroundColor: Color(0xFFFFFDD0),
+                  collapsedBackgroundColor: widget.coloresRestaurante[3],
                   collapsedShape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(2),
                     side: BorderSide(color: widget.coloresRestaurante[0]!, width: 0.7),

@@ -109,14 +109,20 @@ class _CobrarPantallaState extends State<CobrarPantalla> {
 }
 
 
-  void _sendWhatsAppMessage(String phoneNumber, String message) async {
-    final url = 'https://wa.me/$phoneNumber?text=${Uri.encodeComponent(message)}';
-    if (await canLaunch(url)) {
-      await launch(url);
+void _sendWhatsAppMessage(String phoneNumber, String message) async {
+  final url = 'whatsapp://send?phone=$phoneNumber&text=${Uri.encodeComponent(message)}';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    // Fallback: intenta redirigir al enlace web
+    final webUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeComponent(message)}';
+    if (await canLaunch(webUrl)) {
+      await launch(webUrl);
     } else {
-      throw 'Could not launch $url';
+      throw 'No se pudo abrir WhatsApp.';
     }
   }
+}
 
 
 void _showCobrarDialog() {

@@ -122,7 +122,7 @@ class _LOGINPantallaState extends State<LOGINPantalla> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5EEC8), 
+      backgroundColor: Color(0xFFF6F6F6), 
       body: Center(
         child: AnimatedSwitcher(
           duration: Duration(milliseconds: 500),
@@ -149,7 +149,7 @@ class _LOGINPantallaState extends State<LOGINPantalla> with SingleTickerProvider
   Widget _buildLoadingFrame() {
     return Container(
       key: ValueKey(0),
-      color: Colors.white,
+      color: Color(0xFF1E56A0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -157,7 +157,7 @@ class _LOGINPantallaState extends State<LOGINPantalla> with SingleTickerProvider
             child: SizedBox(
               width: 350,
               height: 350,
-              child: Image.asset('assets/logo.jpg'),
+              child: Image.asset('assets/logo2.png'),
             ),
           )
         ],
@@ -168,7 +168,7 @@ class _LOGINPantallaState extends State<LOGINPantalla> with SingleTickerProvider
   Widget _buildGreenFrame() {
     return Container(
       key: ValueKey(1),
-      color: Color(0xFFEB9000),
+      color: Color(0xFFB1CBE2),
     );
   }
 
@@ -180,7 +180,7 @@ class _LOGINPantallaState extends State<LOGINPantalla> with SingleTickerProvider
             ClipPath(
               clipper: UShapedClipper(),
               child: Container(
-                color: Color(0xFF556B2F),
+                color: Color(0xFF1E56A0),
                 height: MediaQuery.of(context).size.height * 0.6,
               ),
             ),
@@ -221,13 +221,13 @@ class _LOGINPantallaState extends State<LOGINPantalla> with SingleTickerProvider
                             fontFamily: 'Roboto',
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 234, 135, 13),
+                            color: Color(0xFF266DCB),
                           ),
                         ),
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Color(0xFF3B6E58),
+                              color: Color(0xFFB1CBE2),
                               width: 3,
                             ),
                           ),
@@ -241,19 +241,19 @@ class _LOGINPantallaState extends State<LOGINPantalla> with SingleTickerProvider
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
-                              color: Colors.orange,
+                              color: Color(0xFF1E56A0),
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
-                              color: Colors.orange,
+                              color: Color(0xFF1E56A0),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
-                              color: Colors.orange,
+                              color: Color(0xFF1E56A0),
                             ),
                           ),
                         ),
@@ -280,19 +280,19 @@ class _LOGINPantallaState extends State<LOGINPantalla> with SingleTickerProvider
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
-                              color: Colors.orange,
+                              color: Color(0xFF1E56A0),
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
-                              color: Colors.orange,
+                              color: Color(0xFF1E56A0),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
-                              color: Colors.orange,
+                              color: Color(0xFF1E56A0),
                             ),
                           ),
                           suffixIcon: IconButton(
@@ -337,7 +337,7 @@ class _LOGINPantallaState extends State<LOGINPantalla> with SingleTickerProvider
                         ElevatedButton(
                           onPressed: _submit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Color(0xFF266DCB),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),

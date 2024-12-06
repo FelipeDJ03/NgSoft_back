@@ -380,7 +380,7 @@ Color _convertirHexAColor(String hexColor) {
                   ListTile(
                     leading: Icon(Icons.settings, color: color2, size: 35,),
                     title: Text(
-                      'Configuracion',
+                      'Configuración',
                       style: TextStyle(
                         fontSize: 18,
                       ),

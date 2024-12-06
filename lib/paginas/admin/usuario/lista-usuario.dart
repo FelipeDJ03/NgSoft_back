@@ -113,19 +113,22 @@ class _ListaUsuarioState extends State<ListaUsuario> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  SizedBox(width: 15),
-                                  Icon(Icons.location_on, color: widget.coloresRestaurante[3], size: 16),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    "(${ds['direccion']})",
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 14.0,
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    SizedBox(width: 15),
+                                    Icon(Icons.location_on, color: widget.coloresRestaurante[3], size: 16),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      "(${ds['direccion']})",
+                                      style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 14.0,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               SizedBox(height: 5),
                               Row(

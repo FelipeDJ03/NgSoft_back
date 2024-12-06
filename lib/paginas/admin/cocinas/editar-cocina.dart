@@ -100,7 +100,7 @@ class _EditarcocinaState extends State<Editarcocina> {
             backgroundColor: widget.coloresRestaurante[0],
             elevation: 0,
             title: Text(
-              'Editar Categoría',
+              'Editar Cocina',
               style: TextStyle(
                 color: widget.coloresRestaurante[3],
                 fontSize: 24.0,
